@@ -1,0 +1,8 @@
+{
+  "name": "My VTU App",
+  "short_name": "VTU",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0a1763",
+  "theme_color": "#0a1763"
+}
