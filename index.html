@@ -8,36 +8,37 @@
 <meta name="theme-color" content="#0a1250">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
-body{background:#f0f3ff;min-height:100vh;padding-bottom:30px}
-.header{background:#0a1250;color:white;padding:28px 20px 50px;text-align:center;border-radius:0 0 28px 28px}
-.header h1{font-size:26px;font-weight:800;margin-bottom:10px}
-.header p{opacity:.9;font-size:16px;margin:8px 0}
-.header .balance-label{margin-top:35px;font-size:16px}
-.header .balance{font-size:32px;font-weight:800;margin-top:6px}
-.main{padding:16px;margin-top:-20px}
+body{background:#f0f3ff;min-height:100vh}
+.header{background:#0a1250;color:white;padding:28px 20px 28px;text-align:center;border-radius:0 0 28px 28px}
+.header h1{font-size:26px;font-weight:800}
+.header p{margin:10px 0;opacity:.9}
+.bal-label{margin-top:30px;font-size:15px}
+.bal{font-size:34px;font-weight:800;margin:6px 0 18px}
+.fund-top{width:100%;background:white;color:#0a1250;border:none;border-radius:12px;padding:14px;font-size:16px;font-weight:700}
+.main{padding:16px}
 .card{background:white;border-radius:20px;padding:16px;box-shadow:0 6px 20px rgba(0,0,0,.06)}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.svc{background:#eef2ff;border:none;border-radius:14px;padding:18px 12px;font-weight:700;font-size:16px;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer}
-.fund{margin-top:12px;width:100%;background:#0a1250;color:white;border:none;border-radius:14px;padding:16px;font-size:17px;font-weight:600;cursor:pointer}
-.trans-card{margin-top:18px}
-.trans-card h3{font-size:18px;margin-bottom:14px}
-.tx{display:flex;gap:8px;padding:8px 0;font-size:15px;border-bottom:1px solid #f2f2f2}
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:100;align-items:center;justify-content:center;padding:18px}
+.svc{background:#eef2ff;border:none;border-radius:14px;padding:18px;font-weight:700;font-size:16px;display:flex;align-items:center;justify-content:center;gap:8px}
+.trans-card{margin-top:16px}
+.trans-card h3{margin-bottom:12px}
+.tx{padding:8px 0;border-bottom:1px solid #f2f2f2;font-size:15px}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99;align-items:center;justify-content:center;padding:18px}
 .modal.active{display:flex}
 .modal-box{background:white;width:100%;max-width:400px;border-radius:20px;padding:22px}
-.bank-box{background:#eef2ff;border:2px dashed #0a1250;padding:14px;border-radius:12px;margin:12px 0;text-align:center}
+.bank-box{background:#eef2ff;border:2px dashed #0a1250;padding:14px;border-radius:12px;text-align:center;margin:12px 0}
 input,select{width:100%;padding:14px;margin:8px 0;border:1px solid #ddd;border-radius:10px}
 .btn-dark{width:100%;background:#0a1250;color:white;padding:14px;border:none;border-radius:12px;font-weight:700;margin-top:8px}
 .btn-light{width:100%;background:#eef2ff;padding:12px;border:none;border-radius:10px;margin-top:8px}
-.small{font-size:12px;color:#666;text-align:center;margin-top:6px}
 </style>
 </head>
 <body>
 <div class="header">
 <h1>My VTU App 🇳🇬</h1>
 <p>Welcome, Musty!</p>
-<p class="balance-label">Wallet Balance</p>
-<div class="balance" id="bal">₦ 0.00</div>
+<p class="bal-label">Wallet Balance</p>
+<div class="bal" id="bal">₦ 0.00</div>
+<button class="fund-top" onclick="openModal('fundModal')">Fund Wallet</button>
+<p style="font-size:11px;margin-top:10px;opacity:.7">UBA • Mustapha Mubarak • 2370760036</p>
 </div>
 <div class="main">
 <div class="card">
@@ -47,8 +48,6 @@ input,select{width:100%;padding:14px;margin:8px 0;border:1px solid #ddd;border-r
 <button class="svc" onclick="openModal('tvModal')">📺 TV Sub</button>
 <button class="svc" onclick="openModal('electModal')">💡 Electricity</button>
 </div>
-<button class="fund" onclick="openModal('fundModal')">Fund Wallet</button>
-<p class="small">UBA • Mustapha Mubarak • 2370760036</p>
 </div>
 <div class="card trans-card">
 <h3>Recent Transactions</h3>
@@ -64,26 +63,25 @@ input,select{width:100%;padding:14px;margin:8px 0;border:1px solid #ddd;border-r
 <div class="bank-box">
 <p>Bank: <b>UBA</b></p>
 <p>Name: <b>Mustapha Mubarak</b></p>
-<p>Account: <b style="font-size:24px">2370760036</b></p>
-<button class="btn-dark" onclick="navigator.clipboard.writeText('2370760036');alert('Copied: 2370760036')">Copy Account Number</button>
+<p style="font-size:24px"><b>2370760036</b></p>
+<button class="btn-dark" onclick="navigator.clipboard.writeText('2370760036');alert('Copied')">Copy Account Number</button>
 </div>
-<input type="number" id="bankAmount" placeholder="Amount you sent e.g 1000">
-<button class="btn-dark" onclick="confirmBank()">I Have Transferred - Credit Me</button>
+<input type="number" id="bankAmount" placeholder="Amount you sent">
+<button class="btn-dark" onclick="confirmBank()">I Have Transferred</button>
 <button class="btn-light" onclick="closeModal('fundModal')">Close</button>
 </div></div>
-<div class="modal" id="airtimeModal"><div class="modal-box"><h3>Buy Airtime</h3><select><option>MTN</option><option>GLO</option><option>AIRTEL</option><option>9MOBILE</option></select><input type="text" placeholder="Phone number"><input type="number" id="airAmount" placeholder="Amount"><button class="btn-dark" onclick="buyService('Airtime')">Buy Now</button><button class="btn-light" onclick="closeModal('airtimeModal')">Close</button></div></div>
-<div class="modal" id="dataModal"><div class="modal-box"><h3>Buy Data</h3><select><option>MTN 2GB ₦600</option><option>GLO 5GB ₦1400</option></select><input type="text" placeholder="Phone number"><button class="btn-dark" onclick="buyService('Data')">Buy Now</button><button class="btn-light" onclick="closeModal('dataModal')">Close</button></div></div>
-<div class="modal" id="tvModal"><div class="modal-box"><h3>TV Subscription</h3><select><option>DSTV</option><option>GOTV</option><option>STARTIMES</option></select><input type="text" placeholder="Smartcard Number"><button class="btn-dark" onclick="buyService('TV Sub')">Subscribe</button><button class="btn-light" onclick="closeModal('tvModal')">Close</button></div></div>
-<div class="modal" id="electModal"><div class="modal-box"><h3>Electricity</h3><select><option>IKEDC</option><option>EKEDC</option><option>AEDC</option></select><input type="text" placeholder="Meter Number"><input type="number" placeholder="Amount"><button class="btn-dark" onclick="buyService('Electricity')">Pay Now</button><button class="btn-light" onclick="closeModal('electModal')">Close</button></div></div>
+<div class="modal" id="airtimeModal"><div class="modal-box"><h3>Airtime</h3><input type="text" placeholder="Phone"><input type="number" id="airAmount" placeholder="Amount"><button class="btn-dark" onclick="buy()">Buy</button><button class="btn-light" onclick="closeModal('airtimeModal')">Close</button></div></div>
+<div class="modal" id="dataModal"><div class="modal-box"><h3>Data</h3><input type="text" placeholder="Phone"><button class="btn-dark" onclick="buy()">Buy</button><button class="btn-light" onclick="closeModal('dataModal')">Close</button></div></div>
+<div class="modal" id="tvModal"><div class="modal-box"><h3>TV Sub</h3><input type="text" placeholder="Smartcard"><button class="btn-dark" onclick="buy()">Pay</button><button class="btn-light" onclick="closeModal('tvModal')">Close</button></div></div>
+<div class="modal" id="electModal"><div class="modal-box"><h3>Electricity</h3><input type="text" placeholder="Meter"><button class="btn-dark" onclick="buy()">Pay</button><button class="btn-light" onclick="closeModal('electModal')">Close</button></div></div>
 <script>
-let balance=parseInt(localStorage.getItem('vtu_bal')||'0');let txs=JSON.parse(localStorage.getItem('vtu_txs')||'[]');
-function renderBal(){document.getElementById('bal').innerText='₦ '+balance.toLocaleString()+'.00';}
-function renderTxs(){if(txs.length){let html='';txs.forEach(t=>{html+=`<div class="tx">✔️ ${t.type} ₦${t.amount} - ${t.date}</div>`});document.getElementById('transList').innerHTML=html+document.getElementById('transList').innerHTML}}
-renderBal();renderTxs();
+let balance=parseInt(localStorage.getItem('vtu_bal')||'0');
+let txs=JSON.parse(localStorage.getItem('vtu_txs')||'[]');
+document.getElementById('bal').innerText='₦ '+balance.toLocaleString()+'.00';
 function openModal(id){document.getElementById(id).classList.add('active')}
 function closeModal(id){document.getElementById(id).classList.remove('active')}
-function confirmBank(){let amt=parseInt(document.getElementById('bankAmount').value);if(!amt||amt<100){alert('Enter amount');return}balance+=amt;localStorage.setItem('vtu_bal',balance);renderBal();txs.unshift({type:'Funding - UBA 2370760036',amount:amt,date:'Success'});localStorage.setItem('vtu_txs',JSON.stringify(txs));renderTxs();alert('₦'+amt+' credited!');closeModal('fundModal');}
-function buyService(name){let amount=parseInt(document.getElementById('airAmount')?.value||'600');if(balance<amount){alert('Insufficient balance. Fund via UBA 2370760036 first');openModal('fundModal');return}balance-=amount;localStorage.setItem('vtu_bal',balance);renderBal();txs.unshift({type:name,amount:amount,date:'Success'});localStorage.setItem('vtu_txs',JSON.stringify(txs));renderTxs();alert(name+' successful!');closeModal('airtimeModal');closeModal('dataModal');closeModal('tvModal');closeModal('electModal');}
+function confirmBank(){let amt=parseInt(document.getElementById('bankAmount').value);if(!amt)return alert('Enter amount');balance+=amt;localStorage.setItem('vtu_bal',balance);document.getElementById('bal').innerText='₦ '+balance.toLocaleString()+'.00';alert('Credited ₦'+amt);closeModal('fundModal')}
+function buy(){let amt=parseInt(document.getElementById('airAmount')?.value||'500');if(balance<amt)return alert('Fund wallet first via UBA 2370760036');balance-=amt;localStorage.setItem('vtu_bal',balance);document.getElementById('bal').innerText='₦ '+balance.toLocaleString()+'.00';alert('Success');closeModal('airtimeModal');closeModal('dataModal');closeModal('tvModal');closeModal('electModal')}
 </script>
 </body>
-                                                            </html>
+  </html>
