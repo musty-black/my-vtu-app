@@ -1,89 +1,61 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My VTU App - Works Now!</title>
-<script src="https://js.paystack.co/v1/inline.js"></script>
+<title>My VTU App - UBA Transfer</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0a1763">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
 body{background:#f0f3ff;padding-bottom:90px}
-.header{background:#0a1763;color:white;padding:30px 20px 50px;text-align:center;border-radius:0 0 30px 30px}
-.balance-card{background:white;color:#0a1763;margin:-25px 20px 0;padding:20px;border-radius:20px;text-align:center;box-shadow:0 8px 20px rgba(0,0,0,.1)}
-.balance-card h2{font-size:36px;margin:5px 0}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:20px}
-.btn{background:#e8ecff;border:none;padding:20px;border-radius:18px;font-size:16px;font-weight:700;cursor:pointer}
-.btn-primary{grid-column:1/-1;background:#0a1763;color:white}
-.card{background:white;margin:0 20px;padding:20px;border-radius:20px}
-.trans-item{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #eee;font-size:14px}
-.modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.6);z-index:99;align-items:center;justify-content:center;padding:20px}
+.header{background:#0a1763;color:white;padding:18px 20px;display:flex;justify-content:space-between}
+.balance-card{background:white;color:#0a1763;margin:16px 20px;padding:20px;border-radius:16px;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.balance-card h2{font-size:36px;margin:6px 0}
+.btn{background:#e8ecff;border:none;padding:16px;border-radius:14px;font-weight:600;cursor:pointer}
+.btn-primary{background:#0a1763;color:white;padding:18px;font-size:16px;border:none;border-radius:14px;width:calc(100% - 40px);margin:14px 20px}
+.card{background:white;margin:14px 20px;padding:16px;border-radius:14px}
+.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);justify-content:center;align-items:center;z-index:100;padding:20px}
 .modal.active{display:flex}
-.modal-box{background:white;width:100%;max-width:400px;border-radius:20px;padding:25px}
-input,select{width:100%;padding:14px;border-radius:12px;border:1px solid #ddd;margin-bottom:12px;font-size:15px}
-.action-btn{width:100%;padding:14px;background:#0a1763;color:white;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer}
-.close{float:right;font-size:22px;cursor:pointer}
+.modal-box{background:white;width:100%;max-width:400px;border-radius:18px;padding:22px}
+input,select{width:100%;padding:14px;margin:8px 0;border:1px solid #ddd;border-radius:10px}
+.bank-box{background:#f0f3ff;border:2px dashed #0a1763;padding:14px;border-radius:12px;margin:10px 0}
+.small{font-size:12px;color:#666}
 </style>
 </head>
 <body>
-<div class="header"><h1>My VTU App 🇳🇬</h1><p>Welcome, Musty!</p></div>
-<div class="balance-card"><small>Wallet Balance</small><h2 id="bal">₦0</h2><small>Tap Fund Wallet</small></div>
-<div class="grid">
-<button class="btn" onclick="openModal('airtimeModal')">📱 Airtime</button>
-<button class="btn" onclick="openModal('dataModal')">📶 Data</button>
-<button class="btn" onclick="alert('TV coming soon')">📺 TV</button>
-<button class="btn" onclick="alert('Electricity coming soon')">💡 Light</button>
-<button class="btn btn-primary" onclick="openModal('fundModal')">💰 Fund Wallet</button>
+<div class="header"><b>Musty VTU</b><span>Mustapha</span></div>
+<div class="balance-card"><p>Wallet Balance</p><h2 id="bal">₦ 0.00</h2><p class="small">UBA - Mustapha Mubarak - 2370760036</p></div>
+<button class="btn-primary" onclick="openModal('fundModal')">+ Fund Wallet - UBA Transfer</button>
+<div class="card"><b>Transactions</b><div id="trans"></div></div>
+<div class="modal" id="fundModal"><div class="modal-box">
+<h3>Fund via UBA Transfer</h3>
+<div class="bank-box">
+<p>Bank: <b>UBA</b></p>
+<p>Name: <b>Mustapha Mubarak</b></p>
+<p>Number: <b style="font-size:22px">2370760036</b></p>
+<button onclick="navigator.clipboard.writeText('2370760036');alert('Copied 2370760036')" style="width:100%;margin-top:10px;background:#0a1763;color:white;padding:12px;border:none;border-radius:10px">Copy Account Number</button>
 </div>
-<div class="card"><h3>Recent Transactions</h3><div id="history"><p style="text-align:center;color:#888;padding:20px">No transactions yet</p></div></div>
-
-<div class="modal" id="fundModal"><div class="modal-box"><span class="close" onclick="closeModal('fundModal')">&times;</span><h3>Fund Wallet</h3><input type="number" id="fundAmount" placeholder="Amount e.g 1000"><input type="email" id="fundEmail" placeholder="Your email"><button class="action-btn" onclick="fundWithPaystack()">Pay with Paystack</button><button class="action-btn" style="background:#ccc;color:#000;margin-top:8px" onclick="fundDemo()">Demo Add (No real money)</button></div></div>
-
-<div class="modal" id="airtimeModal"><div class="modal-box"><span class="close" onclick="closeModal('airtimeModal')">&times;</span><h3>Buy Airtime</h3><select id="airNetwork"><option>MTN</option><option>Airtel</option><option>GLO</option><option>9mobile</option></select><input type="tel" id="airPhone" placeholder="Phone Number"><input type="number" id="airAmount" placeholder="Amount"><button class="action-btn" onclick="buyAirtime()">Buy Now</button></div></div>
-
-<div class="modal" id="dataModal"><div class="modal-box"><span class="close" onclick="closeModal('dataModal')">&times;</span><h3>Buy Data</h3><select id="dataNetwork"><option>MTN</option><option>Airtel</option><option>GLO</option><option>9mobile</option></select><select id="dataPlan"><option value="600">2GB - N600</option><option value="1400">5GB - N1400</option><option value="2500">10GB - N2500</option><option value="3500">20GB - N3500</option></select><input type="tel" id="dataPhone" placeholder="Phone Number"><button class="action-btn" onclick="buyData()">Buy Now</button></div></div>
-
+<input type="number" id="bankAmount" placeholder="Amount you sent e.g 1000">
+<button onclick="confirmBank()" style="width:100%;background:#0a1763;color:white;padding:14px;border:none;border-radius:12px;font-weight:600">I Have Transferred - Credit Me</button>
+<button style="width:100%;margin-top:10px;padding:12px;border:none;border-radius:10px" onclick="closeModal('fundModal')">Close</button>
+</div></div>
 <script>
-let balance = parseInt(localStorage.getItem('bal')||'0');
-let txs = JSON.parse(localStorage.getItem('txs')||'[]');
-updateUI();
+let balance=parseInt(localStorage.getItem('vtu_bal')||'0');
+let txs=JSON.parse(localStorage.getItem('vtu_txs')||'[]');
+document.getElementById('bal').innerText='₦ '+balance.toLocaleString()+'.00';
 function openModal(id){document.getElementById(id).classList.add('active')}
 function closeModal(id){document.getElementById(id).classList.remove('active')}
-function updateUI(){
- document.getElementById('bal').innerText='N'+balance.toLocaleString();
- let h=document.getElementById('history');
- if(txs.length==0){h.innerHTML='<p style="text-align:center;color:#888;padding:20px">No transactions yet</p>';return}
- h.innerHTML=txs.map(t=>`<div class="trans-item"><span> ${t}</span><span style="color:green">Success</span></div>`).join('');
- localStorage.setItem('bal',balance);localStorage.setItem('txs',JSON.stringify(txs));
-}
-function fundDemo(){
- let amt=parseInt(document.getElementById('fundAmount').value);
- if(!amt||amt<100){alert('Enter amount min 100');return}
- balance+=amt;txs.unshift(`Wallet Fund - N${amt}`);updateUI();closeModal('fundModal');alert(`${amt} added!`);
-}
-function fundWithPaystack(){
- let amt=parseInt(document.getElementById('fundAmount').value);
- let email=document.getElementById('fundEmail').value;
- if(!amt||!email){alert('Enter amount and email');return}
- let handler=PaystackPop.setup({
-  key:'pk_test_xxxxxxxxxxxxxxxxxxxx',
-  email:email,amount:amt*100,
-  onClose:function(){alert('Payment cancelled')},
-  callback:function(response){
-   balance+=amt;txs.unshift(`Wallet Fund (Paystack) - N${amt} - ${response.reference}`);updateUI();closeModal('fundModal');alert('Payment Success! N'+amt+' added');
-  }
- });handler.openIframe();
-}
-function buyAirtime(){
- let net=document.getElementById('airNetwork').value;let phone=document.getElementById('airPhone').value;let amt=parseInt(document.getElementById('airAmount').value);
- if(phone.length<11){alert('Valid phone');return}if(balance<amt){alert('Low balance! Fund first');openModal('fundModal');return}
- balance-=amt;txs.unshift(`${net} Airtime ${phone} - N${amt}`);updateUI();closeModal('airtimeModal');alert(`Success! ${net} N${amt} to ${phone}`);
-}
-function buyData(){
- let net=document.getElementById('dataNetwork').value;let phone=document.getElementById('dataPhone').value;let planEl=document.getElementById('dataPlan');let amt=parseInt(planEl.value);let planText=planEl.options[planEl.selectedIndex].text;
- if(phone.length<11){alert('Valid phone');return}if(balance<amt){alert('Low balance! Fund first');openModal('fundModal');return}
- balance-=amt;txs.unshift(`${net} ${planText} to ${phone} - N${amt}`);updateUI();closeModal('dataModal');alert(`Success! ${planText} to ${phone}`);
+function confirmBank(){
+let amt=parseInt(document.getElementById('bankAmount').value);
+if(!amt||amt<100){alert('Enter amount');return}
+balance+=amt;localStorage.setItem('vtu_bal',balance);
+document.getElementById('bal').innerText='₦ '+balance.toLocaleString()+'.00';
+txs.unshift({type:'Funding - UBA 2370760036',amount:amt,date:new Date().toLocaleString()});
+localStorage.setItem('vtu_txs',JSON.stringify(txs));
+alert('₦'+amt+' credited for Mustapha Mubarak UBA');
+closeModal('fundModal');location.reload();
 }
 </script>
 </body>
-                                                    </html>
+ </html>
