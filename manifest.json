@@ -1,8 +1,16 @@
 {
-  "name": "My VTU App",
-  "short_name": "VTU",
-  "start_url": "./index.html",
+  "name": "Musty VTU - UBA Transfer",
+  "short_name": "Musty VTU",
+  "description": "Buy MTN, Glo, Airtel, 9mobile data and airtime - Pay via UBA 2370760036 Mustapha Mubarak",
+  "start_url": "/my-vtu-app/",
   "display": "standalone",
   "background_color": "#0a1763",
-  "theme_color": "#0a1763"
+  "theme_color": "#0a1763",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3659/3659899.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
 }
