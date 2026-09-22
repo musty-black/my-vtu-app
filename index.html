@@ -3,73 +3,117 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Musty VTU Opay</title>
+<title>MustyPay - Mustapha Mubarak</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
-body{background:#f5f5f7;padding-bottom:20px}
-.header{background:#0a3d8f;color:white;padding:16px;border-radius:0 0 20px 20px}
+body{background:#f2f4f7;padding-bottom:80px}
+.header{background:#0b1e3a;color:white;padding:18px 16px 26px 16px;border-radius:0 0 26px 26px}
 .top{display:flex;justify-content:space-between;align-items:center}
-.bal{font-size:28px;font-weight:900}
-.fundBtn{background:white;color:#0a3d8f;border:0;padding:10px 18px;border-radius:20px;font-weight:900}
-.card{background:white;border-radius:16px;padding:14px;margin:12px;box-shadow:0 2px 10px rgba(0,0,0,.05)}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:10px}
-.opay-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px 6px;border-radius:14px;color:white;text-align:center;min-height:75px}
-.opay-btn b{font-size:11px;margin-top:6px}
-.opay-btn span{font-size:22px}
-.c1{background:#2ecc71}.c2{background:#e67e22}.c3{background:#3498db}.c4{background:#9b59b6}
-.c5{background:#e74c3c}.c6{background:#1abc9c}.c7{background:#f1c40f;color:#222}.c8{background:#34495e}
-input,select{width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;margin:6px 0}
-.btn{width:100%;padding:12px;border:0;border-radius:10px;color:white;font-weight:bold;background:#0a3d8f}
-.tag{padding:3px 10px;border-radius:20px;font-size:11px;font-weight:bold}
+.left{display:flex;align-items:center;gap:10px}
+.logo{width:42px;height:42px;background:white;color:#0b1e3a;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900}
+.small{font-size:13px;opacity:.9}
+.bal-big{font-size:13px;text-align:right;opacity:.8}
+.bal-big b{display:block;font-size:20px;opacity:1}
+.card{background:white;border-radius:18px;padding:16px;margin:14px;box-shadow:0 4px 12px rgba(0,0,0,.05)}
+.avail{font-size:14px;color:#555;display:flex;align-items:center;gap:6px}
+.amount{font-size:38px;font-weight:900;margin:8px 0}
+.btn-row{display:flex;gap:12px;margin-top:10px}
+.btn{flex:1;padding:14px;border-radius:14px;border:0;font-weight:700}
+.btn-dark{background:#0b1e3a;color:white}
+.btn-light{background:#e8eef7;color:#0b1e3a;border:1px solid #0b1e3a}
+.fund-title{font-weight:900;font-size:18px;display:flex;gap:8px;align-items:center}
+.uba-box{background:linear-gradient(135deg,#0b1e3a,#1a3a6b);color:white;border-radius:18px;padding:20px;text-align:center;margin-top:12px}
+.uba-box small{opacity:.8;letter-spacing:1px}
+.uba-num{font-size:32px;font-weight:900;margin:8px 0;letter-spacing:1px}
+.uba-name{font-size:15px;margin-bottom:14px}
+.copyBtn{background:white;color:#0b1e3a;border:0;padding:12px 22px;border-radius:12px;font-weight:800}
+.input{width:100%;padding:14px;border:1.5px solid #ddd;border-radius:12px;margin-top:10px}
+.payBtn{width:100%;margin-top:12px;background:#0b1e3a;color:white;padding:14px;border:0;border-radius:12px;font-weight:800}
+.tag{padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700}
 .pending{background:#fff3cd;color:#856404}.success{background:#d4edda;color:#155724}.failed{background:#f8d7da;color:#721c24}
-.small{font-size:12px;color:#888}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:white;display:flex;justify-content:space-around;padding:10px 0;border-top:1px solid #ddd}
+.b-item{text-align:center;font-size:12px;color:#555}
+.b-item.active{color:#0b1e3a;background:#e8eef7;padding:6px 16px;border-radius:14px}
 .hidden{display:none}
+.admin-badge{background:#1a1a1a;color:white;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:800;float:right;margin-top:-10px}
 </style>
 </head>
 <body>
-<div class="header"><div class="top"><div><small>Available Balance</small><div class="bal" id="bal">₦0.00</div></div><button class="fundBtn" onclick="fund()">+ Fund</button></div></div>
-<div class="card"><b>Quick Services - Opay Style</b><div class="grid">
-<div class="opay-btn c1" onclick="openService('airtime')"><span>📱</span><b>Airtime</b></div>
-<div class="opay-btn c2" onclick="openService('data')"><span>🌐</span><b>Data</b></div>
-<div class="opay-btn c3" onclick="openService('tv')"><span>📺</span><b>TV</b></div>
-<div class="opay-btn c4" onclick="openService('electric')"><span>💡</span><b>Electric</b></div>
-<div class="opay-btn c5" onclick="openService('betting')"><span>⚽</span><b>Betting</b></div>
-<div class="opay-btn c6" onclick="openService('exam')"><span>🎓</span><b>Exam</b></div>
-<div class="opay-btn c7" onclick="openService('smile')"><span>😊</span><b>Smile</b></div>
-<div class="opay-btn c8" onclick="openService('spectranet')"><span>📶</span><b>Spectra</b></div>
-</div></div>
-<div class="card hidden" id="form-airtime"><h3>Buy Airtime</h3><select id="net"><option>MTN</option><option>GLO</option><option>AIRTEL</option><option>9MOBILE</option></select><input id="phone" placeholder="080..."><input id="amt" type="number" placeholder="Amount"><button class="btn" onclick="buyAirtime()">Buy Airtime</button></div>
-<div class="card hidden" id="form-data"><h3>Buy Data</h3><select id="datanet"><option>MTN</option><option>GLO</option><option>AIRTEL</option><option>9MOBILE</option></select><select id="dataplan"><option>500MB - ₦150</option><option>1GB - ₦270</option><option>2GB - ₦540</option></select><input id="dataphone" placeholder="Phone number"><button class="btn" style="background:#e67e22" onclick="buyService('DATA')">Buy Data</button></div>
-<div class="card hidden" id="form-tv"><h3>TV Subscription</h3><select><option>DSTV</option><option>GOTV</option><option>STARTIMES</option></select><input placeholder="Smartcard"><input type="number" placeholder="Amount"><button class="btn" style="background:#3498db" onclick="buyService('TV SUB')">Pay TV</button></div>
-<div class="card hidden" id="form-electric"><h3>Electricity</h3><select><option>IKEDC</option><option>KEDCO</option><option>AEDC</option></select><input placeholder="Meter No"><input type="number" placeholder="Amount"><button class="btn" style="background:#9b59b6" onclick="buyService('ELECTRIC')">Pay Light</button></div>
-<div class="card hidden" id="form-betting"><h3>Betting</h3><select><option>Bet9ja</option><option>1xBet</option><option>SportyBet</option></select><input placeholder="User ID"><input type="number" placeholder="Amount"><button class="btn" style="background:#e74c3c" onclick="buyService('BETTING')">Fund</button></div>
-<div class="card hidden" id="form-exam"><h3>Exam Pin</h3><select><option>WAEC</option><option>NECO</option></select><input type="number" placeholder="Qty"><button class="btn" style="background:#1abc9c" onclick="buyService('EXAM PIN')">Buy Pin</button></div>
-<div class="card hidden" id="form-smile"><h3>Smile</h3><input placeholder="Smile ID"><input type="number" placeholder="Amount"><button class="btn" style="background:#f1c40f;color:#222" onclick="buyService('SMILE')">Pay</button></div>
-<div class="card hidden" id="form-spectranet"><h3>Spectranet</h3><input placeholder="Account ID"><input type="number" placeholder="Amount"><button class="btn" style="background:#34495e" onclick="buyService('SPECTRA')">Pay</button></div>
-<div class="card"><h3>Transaction History - You will see PENDING here</h3><div id="history"></div></div>
-<div class="card" style="border:2px dashed #0a3d8f"><h3>ADMIN PIN 2025</h3><input id="adminPin" type="password" placeholder="Enter PIN"><button class="btn" onclick="unlockAdmin()">Unlock Admin</button><div id="adminArea" class="hidden"><h4 style="margin-top:10px">Pending Fund Requests</h4><div id="pendingList"></div></div></div>
+<div class="header">
+<div class="top">
+<div class="left"><div class="logo">M</div><div><b>MustyPay</b><br><span class="small">Hi, Mustapha Mubarak 👋</span></div></div>
+<div class="bal-big">Total Balance<b id="totalBal">₦0.00</b></div>
+</div>
+</div>
+
+<div class="card">
+<div style="display:flex;justify-content:space-between"><span class="avail">Available Balance ⊙</span><span class="admin-badge">ADMIN • 2025</span></div>
+<div class="amount" id="availBal">₦0.00</div>
+<div class="btn-row">
+<button class="btn btn-dark" onclick="showFund()">+ Fund Wallet</button>
+<button class="btn btn-light" onclick="showHistory()">🕘 History</button>
+</div>
+</div>
+
+<div class="card" id="fundCard">
+<div class="fund-title">🗂️ Fund Wallet</div>
+<div style="font-size:13px;color:#666;margin-top:4px">Transfer to your UBA and click I Have Paid</div>
+<div class="uba-box">
+<small>UBA BANK ACCOUNT</small>
+<div class="uba-num">2370760036</div>
+<div class="uba-name">MUSTAPHA MUBARAK</div>
+<button class="copyBtn" onclick="copyNum()">Copy Number</button>
+</div>
+<div style="margin-top:16px"><b>Amount you sent (₦)</b><input id="sentAmount" class="input" type="number" placeholder="e.g 1000"><button class="payBtn" onclick="iHavePaid()">I Have Paid</button></div>
+</div>
+
+<div class="card hidden" id="historyCard">
+<h3>Transaction History</h3>
+<div style="font-size:12px;color:#888;margin-bottom:8px">You will see PENDING here after you click I Have Paid</div>
+<div id="history"></div>
+</div>
+
+<div class="card hidden" id="adminCard" style="border:2px dashed #0b1e3a">
+<h3>Admin Panel - PIN 2025</h3>
+<input id="adminPin" type="password" class="input" placeholder="Enter PIN 2025">
+<button class="payBtn" onclick="unlockAdmin()">Unlock Admin</button>
+<div id="adminArea" class="hidden" style="margin-top:12px">
+<h4>Pending Requests - Approve to change Pending → Successful</h4>
+<div id="pendingList"></div>
+</div>
+</div>
+
+<div class="bottom">
+<div class="b-item active" onclick="showFund()"><div>⌂</div>Home</div>
+<div class="b-item" onclick="showFund()"><div>⊕</div>Fund</div>
+<div class="b-item" onclick="showHistory()"><div>☰</div>History</div>
+<div class="b-item" onclick="showAdmin()"><div>◉</div>Admin</div>
+</div>
+
 <script>
-let walletBalance=parseFloat(localStorage.getItem('wallet')||'0');
-let transactions=JSON.parse(localStorage.getItem('transactions')||'[]');
-let pendingFundings=JSON.parse(localStorage.getItem('pendingFundings')||'[]');
-function save(){localStorage.setItem('wallet',walletBalance);localStorage.setItem('transactions',JSON.stringify(transactions));localStorage.setItem('pendingFundings',JSON.stringify(pendingFundings));render();}
+let wallet=parseFloat(localStorage.getItem('wallet')||'0');
+let tx=JSON.parse(localStorage.getItem('transactions')||'[]');
+let pending=JSON.parse(localStorage.getItem('pendingFundings')||'[]');
+function save(){localStorage.setItem('wallet',wallet);localStorage.setItem('transactions',JSON.stringify(tx));localStorage.setItem('pendingFundings',JSON.stringify(pending));render();}
 function render(){
- document.getElementById('bal').innerText='₦'+walletBalance.toFixed(2);
- let h=''; if(transactions.length==0) h='<div class=small>No transaction yet. Click +Fund to see PENDING</div>';
- else [...transactions].reverse().forEach(t=>{let cls=t.status=='Success'?'success':t.status=='Failed'?'failed':'pending';h+=`<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #eee"><div><b>${t.type}</b> ₦${t.amount}<br><span class=small>${t.date}</span></div><span class="tag ${cls}">${t.status}</span></div>`});
+ document.getElementById('totalBal').innerText='₦'+wallet.toFixed(2);
+ document.getElementById('availBal').innerText='₦'+wallet.toFixed(2);
+ let h=''; if(tx.length==0) h='<div style="color:#888;font-size:13px">No transaction yet. Fund wallet to see Pending</div>';
+ else [...tx].reverse().forEach(t=>{let cls=t.status=='Success'?'success':t.status=='Failed'?'failed':'pending';h+=`<div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #eee"><div><b>${t.type}</b> ₦${t.amount}<br><small style="color:#888">${t.date}</small></div><span class="tag ${cls}">${t.status}</span></div>`});
  document.getElementById('history').innerHTML=h;
- let p=''; if(pendingFundings.length==0) p='<div class=small>No pending</div>';
- else pendingFundings.forEach((f,i)=>{p+=`<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #eee"><div><b>₦${f.amount}</b><br><span class=small>${f.date}</span><br><span class="tag pending">Pending</span></div><div style="display:flex;gap:6px"><button class=btn style="width:auto;padding:8px;background:#0a7a0a" onclick="approveFunding(${i})">Approve</button><button class=btn style="width:auto;padding:8px;background:#c0392b" onclick="declineFunding(${i})">Decline</button></div></div>`});
+ let p=''; if(pending.length==0) p='<div style="color:#888;font-size:13px">No pending request</div>';
+ else pending.forEach((f,i)=>{p+=`<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #eee"><div><b>₦${f.amount}</b><br><small>${f.date}</small><br><span class="tag pending">Pending</span></div><div style="display:flex;gap:6px"><button class="payBtn" style="width:auto;padding:8px 12px;background:#0a7a0a" onclick="approve(${i})">Approve</button><button class="payBtn" style="width:auto;padding:8px 12px;background:#c0392b" onclick="decline(${i})">Decline</button></div></div>`});
  document.getElementById('pendingList').innerHTML=p;
 }
-function openService(n){document.querySelectorAll('[id^=form-]').forEach(e=>e.classList.add('hidden'));document.getElementById('form-'+n).classList.remove('hidden');}
-function fund(){let a=prompt('Enter amount');if(!a)return;a=parseFloat(a);let now=new Date().toLocaleString();pendingFundings.push({amount:a,date:now});transactions.push({type:'FUND REQUEST',amount:a,date:now,status:'Pending'});save();alert('Fund ₦'+a+' now Pending in history. Go approve');}
-function approveFunding(i){let fund=pendingFundings[i];walletBalance+=parseFloat(fund.amount);for(let j=transactions.length-1;j>=0;j--){if(transactions[j].amount==fund.amount&&transactions[j].status=='Pending'){transactions[j].status='Success';break;}}pendingFundings.splice(i,1);save();alert('Approved Pending -> Successful');}
-function declineFunding(i){let f=pendingFundings[i];for(let j=transactions.length-1;j>=0;j--){if(transactions[j].amount==f.amount&&transactions[j].status=='Pending'){transactions[j].status='Failed';break;}}pendingFundings.splice(i,1);save();}
-function unlockAdmin(){if(document.getElementById('adminPin').value=='2025'){document.getElementById('adminArea').classList.remove('hidden');render();}else alert('Wrong PIN');}
-function buyAirtime(){let amt=parseFloat(document.getElementById('amt').value);if(!amt)return alert('Enter amount');if(walletBalance<amt)return alert('Fund wallet first');let net=document.getElementById('net').value;walletBalance-=amt;transactions.push({type:net+' AIRTIME',amount:amt,date:new Date().toLocaleString(),status:'Success'});save();alert('Success');}
-function buyService(t){let amt=200;if(walletBalance<amt)return alert('Fund first');walletBalance-=amt;transactions.push({type:t,amount:amt,date:new Date().toLocaleString(),status:'Success'});save();alert(t+' Success');}
+function showFund(){document.getElementById('fundCard').classList.remove('hidden');document.getElementById('historyCard').classList.add('hidden');document.getElementById('adminCard').classList.add('hidden');}
+function showHistory(){document.getElementById('fundCard').classList.add('hidden');document.getElementById('historyCard').classList.remove('hidden');document.getElementById('adminCard').classList.add('hidden');render();}
+function showAdmin(){document.getElementById('fundCard').classList.add('hidden');document.getElementById('historyCard').classList.add('hidden');document.getElementById('adminCard').classList.remove('hidden');}
+function copyNum(){navigator.clipboard.writeText('2370760036');alert('2370760036 Copied - MUSTAPHA MUBARAK');}
+function iHavePaid(){let a=parseFloat(document.getElementById('sentAmount').value);if(!a)return alert('Enter amount you sent');let now=new Date().toLocaleString();pending.push({amount:a,date:now});tx.push({type:'WALLET FUNDING',amount:a,date:now,status:'Pending'});save();document.getElementById('sentAmount').value='';alert('₦'+a+' is now PENDING. Go to History to see am, then Admin to approve to SUCCESSFUL');showHistory();}
+function approve(i){let f=pending[i];wallet+=parseFloat(f.amount);for(let j=tx.length-1;j>=0;j--){if(tx[j].amount==f.amount&&tx[j].status=='Pending'){tx[j].status='Success';break;}}pending.splice(i,1);save();alert('Approved! Pending → Successful. Balance updated');}
+function decline(i){let f=pending[i];for(let j=tx.length-1;j>=0;j--){if(tx[j].amount==f.amount&&tx[j].status=='Pending'){tx[j].status='Failed';break;}}pending.splice(i,1);save();}
+function unlockAdmin(){if(document.getElementById('adminPin').value=='2025'){document.getElementById('adminArea').classList.remove('hidden');render();}else alert('Wrong PIN - use 2025');}
 render();
 </script>
 </body>
-  </html>
+</html>
