@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MustyPay - With Reject</title>
+<title>MustyPay</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
 body{background:#f1f4f9;padding-bottom:90px}
@@ -22,48 +22,4 @@ body{background:#f1f4f9;padding-bottom:90px}
 .input{width:100%;padding:14px;border:1.5px solid #ddd;border-radius:12px;margin:6px 0}
 .payBtn{width:100%;padding:14px;background:#0a1931;color:white;border:0;border-radius:12px;font-weight:800;margin-top:8px}
 .bottom{position:fixed;bottom:0;left:0;right:0;background:white;display:flex;justify-content:space-around;padding:12px 0;border-top:1px solid #ddd;z-index:9999}
-.b-item{text-align:center;font-size:11px;color:#666;font-weight:700;padding:8px 18px;border-radius:16px;cursor:pointer;position:relative}
-.b-item.active{background:#0a1931;color:white}
-.dot{position:absolute;top:2px;right:8px;background:red;color:white;font-size:10px;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900}
-.hidden{display:none}.tag{padding:3px 8px;border-radius:10px;font-size:11px}.pending{background:#fff3cd}.success{background:#d4edda}.rejected{background:#f8d7da}
-.settingsItem{display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid #f0f0f0}
-</style>
-</head>
-<body>
-<div class="header"><div class="top"><div class="left"><div class="logo">M</div><div><b>MustyPay</b><br><small>Hi, Musty 👋</small></div></div><div style="text-align:right"><small>Balance</small><br><b id="tb">₦0.00</b></div></div></div>
-
-<div id="p-home">
-<div class="card"><div class="amount" id="ab">₦0.00</div><div class="btnRow"><button class="btn btnDark" onclick="document.getElementById('fAmt').focus()">+ Fund</button><button class="btn btnLight" onclick="showP('history')">History</button></div></div>
-<div class="card"><b>Fund Wallet - UBA 2370760036</b><div class="ubaBox"><div class="ubaNum">2370760036</div><div>MUSTAPHA MUBARAK</div><button class="copyBtn" onclick="navigator.clipboard.writeText('2370760036');alert('Copied')">Copy</button></div><input id="fAmt" class="input" type="number" placeholder="Amount sent e.g 5000"><button class="payBtn" onclick="fund()">I Have Paid</button></div>
-</div>
-
-<div id="p-history" class="hidden"><div class="card"><h3>History</h3><div id="his"></div></div></div>
-<div id="p-settings" class="hidden"><div class="card"><h3>Settings</h3>
-<div class="settingsItem" onclick="secretTap()"><div><b>👤 MUSTAPHA MUBARAK</b><br><small>Tap 5 times fast for Admin • Secured 🔒</small></div><div id="pendCount" style="background:red;color:white;padding:4px 10px;border-radius:12px;font-size:12px" class="hidden">0 Pending</div></div>
-<div id="aB" class="hidden" style="padding:10px;background:#f5f5f5;border-radius:12px;margin-top:8px;border:2px solid #0a1931"><h4>ADMIN PIN 2025</h4><input id="aP" type="password" class="input" placeholder="Enter 2025"><button class="payBtn" onclick="unlock()">Unlock</button><div id="aA" class="hidden"><h4 style="margin:10px 0">Pending Payments:</h4><div id="pL"></div><button class="payBtn" style="background:red;margin-top:15px" onclick="clearAll()">🗑️ CLEAR ALL FAKE WALLET (Reset)</button></div></div>
-</div></div>
-<div id="p-services" class="hidden"><div class="card"><h3>Services - Wallet <b id="wb2">₦0.00</b></h3><button class="payBtn" onclick="buy('AIRTIME')">Buy Airtime 50 Demo</button></div></div>
-
-<div class="bottom">
-<div class="b-item active" id="n-home" onclick="showP('home')">🏠<br>Home</div>
-<div class="b-item" id="n-services" onclick="showP('services')">🗂️<br>Services</div>
-<div class="b-item" id="n-history" onclick="showP('history')">☰<br>History</div>
-<div class="b-item" id="n-settings" onclick="showP('settings')">⚙️<br>Settings <span id="dot" class="dot hidden">!</span></div>
-</div>
-
-<script>
-let w=parseFloat(localStorage.getItem('musty_wallet')||0), tx=JSON.parse(localStorage.getItem('musty_tx')||'[]'), pd=JSON.parse(localStorage.getItem('musty_pending')||'[]'), taps=0;
-function sv(){localStorage.setItem('musty_wallet',w);localStorage.setItem('musty_tx',JSON.stringify(tx));localStorage.setItem('musty_pending',JSON.stringify(pd));rend()}
-function rend(){let b='₦'+w.toFixed(2);document.getElementById('tb').innerText=b;document.getElementById('ab').innerText=b;document.getElementById('wb2').innerText=b;let h=tx.length==0?'No tx':'';[...tx].reverse().forEach(x=>{let cls=x.s=='Success'?'success':x.s=='Rejected'?'rejected':'pending';h+=`<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #eee"><div><b>${x.t}</b><br>₦${x.a}<br><small>${x.d}</small></div><span class="tag ${cls}">${x.s}</span></div>`});document.getElementById('his').innerHTML=h;let p='';if(pd.length==0){p='No pending';document.getElementById('dot').classList.add('hidden');document.getElementById('pendCount').classList.add('hidden')}else{p='';pd.forEach((f,i)=>{p+=`<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #ddd"><div><b>₦${f.a}</b><br><small>${f.d}</small></div><div style="display:flex;gap:6px"><button style="padding:8px 12px;background:green;color:white;border:0;border-radius:8px;font-weight:800" onclick="ap(${i})">Approve</button><button style="padding:8px 12px;background:red;color:white;border:0;border-radius:8px;font-weight:800" onclick="rj(${i})">Reject</button></div></div>`});document.getElementById('dot').classList.remove('hidden');document.getElementById('dot').innerText=pd.length;document.getElementById('pendCount').classList.remove('hidden');document.getElementById('pendCount').innerText=pd.length+' Pending';}document.getElementById('pL').innerHTML=p}
-function showP(p){['home','services','history','settings'].forEach(x=>{document.getElementById('p-'+x).classList.add('hidden');document.getElementById('n-'+x).classList.remove('active')});document.getElementById('p-'+p).classList.remove('hidden');document.getElementById('n-'+p).classList.add('active');rend()}
-function fund(){let a=parseFloat(document.getElementById('fAmt').value);if(!a)return alert('Enter amount');let d=new Date().toLocaleString();pd.push({a:a,d:d});tx.push({t:'WALLET FUNDING',a:a,d:d,s:'Pending'});sv();alert('Pending! Admin go approve after checking UBA');showP('home')}
-function ap(i){let f=pd[i];w+=f.a;for(let j=tx.length-1;j>=0;j--){if(tx[j].a==f.a&&tx[j].s=='Pending'){tx[j].s='Success';break}}pd.splice(i,1);sv();alert('Approved! Wallet ₦'+w)}
-function rj(i){if(!confirm('You sure? Reject this payment?'))return;let f=pd[i];for(let j=tx.length-1;j>=0;j--){if(tx[j].a==f.a&&tx[j].s=='Pending'){tx[j].s='Rejected';break}}pd.splice(i,1);sv();alert('Rejected & Deleted!')}
-function secretTap(){taps++;if(taps>=5){document.getElementById('aB').classList.remove('hidden');taps=0}setTimeout(()=>taps=0,3000)}
-function unlock(){if(document.getElementById('aP').value=='2025'){document.getElementById('aA').classList.remove('hidden');rend()}else alert('Wrong PIN')}
-function buy(t){if(w<50)return alert('Fund wallet');w-=50;tx.push({t:t,a:50,d:new Date().toLocaleString(),s:'Success'});sv();alert('Success')}
-function clearAll(){if(prompt('Type DELETE to clear all fake wallet')=='DELETE'){w=0;tx=[];pd=[];sv();alert('All cleared!');}}
-rend()
-</script>
-</body>
-  </html>
+.b-item{text
