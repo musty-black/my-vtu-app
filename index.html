@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Musty VTU Opay</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
+body{background:#f5f5f7;padding-bottom:20px}
+.header{background:#0a3d8f;color:white;padding:16px;border-radius:0 0 20px 20px}
+.top{display:flex;justify-content:space-between;align-items:center}
+.bal{font-size:28px;font-weight:900}
+.fundBtn{background:white;color:#0a3d8f;border:0;padding:10px 18px;border-radius:20px;font-weight:900}
+.card{background:white;border-radius:16px;padding:14px;margin:12px;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:10px}
+.opay-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px 6px;border-radius:14px;color:white;text-align:center;min-height:75px}
+.opay-btn b{font-size:11px;margin-top:6px}
+.opay-btn span{font-size:22px}
+.c1{background:#2ecc71}.c2{background:#e67e22}.c3{background:#3498db}.c4{background:#9b59b6}
+.c5{background:#e74c3c}.c6{background:#1abc9c}.c7{background:#f1c40f;color:#222}.c8{background:#34495e}
+input,select{width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;margin:6px 0}
+.btn{width:100%;padding:12px;border:0;border-radius:10px;color:white;font-weight:bold;background:#0a3d8f}
+.tag{padding:3px 10px;border-radius:20px;font-size:11px;font-weight:bold}
+.pending{background:#fff3cd;color:#856404}.success{background:#d4edda;color:#155724}.failed{background:#f8d7da;color:#721c24}
+.small{font-size:12px;color:#888}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<div class="header"><div class="top"><div><small>Available Balance</small><div class="bal" id="bal">₦0.00</div></div><button class="fundBtn" onclick="fund()">+ Fund</button></div></div>
+<div class="card"><b>Quick Services - Opay Style</b><div class="grid">
+<div class="opay-btn c1" onclick="openService('airtime')"><span>📱</span><b>Airtime</b></div>
+<div class="opay-btn c2" onclick="openService('data')"><span>🌐</span><b>Data</b></div>
+<div class="opay-btn c3" onclick="openService('tv')"><span>📺</span><b>TV</b></div>
+<div class="opay-btn c4" onclick="openService('electric')"><span>💡</span><b>Electric</b></div>
+<div class="opay-btn c5" onclick="openService('betting')"><span>⚽</span><b>Betting</b></div>
+<div class="opay-btn c6" onclick="openService('exam')"><span>🎓</span><b>Exam</b></div>
+<div class="opay-btn c7" onclick="openService('smile')"><span>😊</span><b>Smile</b></div>
+<div class="opay-btn c8" onclick="openService('spectranet')"><span>📶</span><b>Spectra</b></div>
+</div></div>
+<div class="card hidden" id="form-airtime"><h3>Buy Airtime</h3><select id="net"><option>MTN</option><option>GLO</option><option>AIRTEL</option><option>9MOBILE</option></select><input id="phone" placeholder="080..."><input id="amt" type="number" placeholder="Amount"><button class="btn" onclick="buyAirtime()">Buy Airtime</button></div>
+<div class="card hidden" id="form-data"><h3>Buy Data</h3><select id="datanet"><option>MTN</option><option>GLO</option><option>AIRTEL</option><option>9MOBILE</option></select><select id="dataplan"><option>500MB - ₦150</option><option>1GB - ₦270</option><option>2GB - ₦540</option></select><input id="dataphone" placeholder="Phone number"><button class="btn" style="background:#e67e22" onclick="buyService('DATA')">Buy Data</button></div>
+<div class="card hidden" id="form-tv"><h3>TV Subscription</h3><select><option>DSTV</option><option>GOTV</option><option>STARTIMES</option></select><input placeholder="Smartcard"><input type="number" placeholder="Amount"><button class="btn" style="background:#3498db" onclick="buyService('TV SUB')">Pay TV</button></div>
+<div class="card hidden" id="form-electric"><h3>Electricity</h3><select><option>IKEDC</option><option>KEDCO</option><option>AEDC</option></select><input placeholder="Meter No"><input type="number" placeholder="Amount"><button class="btn" style="background:#9b59b6" onclick="buyService('ELECTRIC')">Pay Light</button></div>
+<div class="card hidden" id="form-betting"><h3>Betting</h3><select><option>Bet9ja</option><option>1xBet</option><option>SportyBet</option></select><input placeholder="User ID"><input type="number" placeholder="Amount"><button class="btn" style="background:#e74c3c" onclick="buyService('BETTING')">Fund</button></div>
+<div class="card hidden" id="form-exam"><h3>Exam Pin</h3><select><option>WAEC</option><option>NECO</option></select><input type="number" placeholder="Qty"><button class="btn" style="background:#1abc9c" onclick="buyService('EXAM PIN')">Buy Pin</button></div>
+<div class="card hidden" id="form-smile"><h3>Smile</h3><input placeholder="Smile ID"><input type="number" placeholder="Amount"><button class="btn" style="background:#f1c40f;color:#222" onclick="buyService('SMILE')">Pay</button></div>
+<div class="card hidden" id="form-spectranet"><h3>Spectranet</h3><input placeholder="Account ID"><input type="number" placeholder="Amount"><button class="btn" style="background:#34495e" onclick="buyService('SPECTRA')">Pay</button></div>
+<div class="card"><h3>Transaction History - You will see PENDING here</h3><div id="history"></div></div>
+<div class="card" style="border:2px dashed #0a3d8f"><h3>ADMIN PIN 2025</h3><input id="adminPin" type="password" placeholder="Enter PIN"><button class="btn" onclick="unlockAdmin()">Unlock Admin</button><div id="adminArea" class="hidden"><h4 style="margin-top:10px">Pending Fund Requests</h4><div id="pendingList"></div></div></div>
+<script>
+let walletBalance=parseFloat(localStorage.getItem('wallet')||'0');
+let transactions=JSON.parse(localStorage.getItem('transactions')||'[]');
+let pendingFundings=JSON.parse(localStorage.getItem('pendingFundings')||'[]');
+function save(){localStorage.setItem('wallet',walletBalance);localStorage.setItem('transactions',JSON.stringify(transactions));localStorage.setItem('pendingFundings',JSON.stringify(pendingFundings));render();}
+function render(){
+ document.getElementById('bal').innerText='₦'+walletBalance.toFixed(2);
+ let h=''; if(transactions.length==0) h='<div class=small>No transaction yet. Click +Fund to see PENDING</div>';
+ else [...transactions].reverse().forEach(t=>{let cls=t.status=='Success'?'success':t.status=='Failed'?'failed':'pending';h+=`<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #eee"><div><b>${t.type}</b> ₦${t.amount}<br><span class=small>${t.date}</span></div><span class="tag ${cls}">${t.status}</span></div>`});
+ document.getElementById('history').innerHTML=h;
+ let p=''; if(pendingFundings.length==0) p='<div class=small>No pending</div>';
+ else pendingFundings.forEach((f,i)=>{p+=`<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #eee"><div><b>₦${f.amount}</b><br><span class=small>${f.date}</span><br><span class="tag pending">Pending</span></div><div style="display:flex;gap:6px"><button class=btn style="width:auto;padding:8px;background:#0a7a0a" onclick="approveFunding(${i})">Approve</button><button class=btn style="width:auto;padding:8px;background:#c0392b" onclick="declineFunding(${i})">Decline</button></div></div>`});
+ document.getElementById('pendingList').innerHTML=p;
+}
+function openService(n){document.querySelectorAll('[id^=form-]').forEach(e=>e.classList.add('hidden'));document.getElementById('form-'+n).classList.remove('hidden');}
+function fund(){let a=prompt('Enter amount');if(!a)return;a=parseFloat(a);let now=new Date().toLocaleString();pendingFundings.push({amount:a,date:now});transactions.push({type:'FUND REQUEST',amount:a,date:now,status:'Pending'});save();alert('Fund ₦'+a+' now Pending in history. Go approve');}
+function approveFunding(i){let fund=pendingFundings[i];walletBalance+=parseFloat(fund.amount);for(let j=transactions.length-1;j>=0;j--){if(transactions[j].amount==fund.amount&&transactions[j].status=='Pending'){transactions[j].status='Success';break;}}pendingFundings.splice(i,1);save();alert('Approved Pending -> Successful');}
+function declineFunding(i){let f=pendingFundings[i];for(let j=transactions.length-1;j>=0;j--){if(transactions[j].amount==f.amount&&transactions[j].status=='Pending'){transactions[j].status='Failed';break;}}pendingFundings.splice(i,1);save();}
+function unlockAdmin(){if(document.getElementById('adminPin').value=='2025'){document.getElementById('adminArea').classList.remove('hidden');render();}else alert('Wrong PIN');}
+function buyAirtime(){let amt=parseFloat(document.getElementById('amt').value);if(!amt)return alert('Enter amount');if(walletBalance<amt)return alert('Fund wallet first');let net=document.getElementById('net').value;walletBalance-=amt;transactions.push({type:net+' AIRTIME',amount:amt,date:new Date().toLocaleString(),status:'Success'});save();alert('Success');}
+function buyService(t){let amt=200;if(walletBalance<amt)return alert('Fund first');walletBalance-=amt;transactions.push({type:t,amount:amt,date:new Date().toLocaleString(),status:'Success'});save();alert(t+' Success');}
+render();
+</script>
+</body>
+  </html>
