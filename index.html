@@ -15,13 +15,14 @@ body{background:#f1f4f9;padding-bottom:90px}
 .ubaBox{background:linear-gradient(135deg,#0a1931,#1e3a7a);border-radius:18px;padding:18px;text-align:center;color:white;margin-top:10px}
 .ubaNum{font-size:28px;font-weight:900;margin:6px 0;letter-spacing:1px}
 .copyBtn{background:white;color:#0a1931;border:0;padding:10px 20px;border-radius:12px;font-weight:800;margin-top:8px}
-.input{width:100%;padding:14px;border:1.5px solid #ddd;border-radius:12px;margin:8px 0;font-size:16px}
+.input,select{width:100%;padding:14px;border:1.5px solid #ddd;border-radius:12px;margin:8px 0;font-size:16px}
 .payBtn{width:100%;padding:14px;background:#0a1931;color:white;border:0;border-radius:12px;font-weight:800;margin-top:8px;font-size:16px}
 .bottom{position:fixed;bottom:0;left:0;right:0;background:white;display:flex;justify-content:space-around;padding:12px 0;border-top:1px solid #ddd;z-index:9999}
 .b-item{text-align:center;font-size:11px;color:#666;font-weight:700;padding:8px 18px;border-radius:16px;cursor:pointer;position:relative}
 .b-item.active{background:#0a1931;color:white}
 .dot{position:absolute;top:2px;right:8px;background:red;color:white;font-size:10px;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900}
 .hidden{display:none}.tag{padding:3px 8px;border-radius:10px;font-size:11px}.pending{background:#fff3cd}.success{background:#d4edda}.rejected{background:#f8d7da}
+.sBox{border:1.5px solid #eef2f7;border-radius:16px;padding:14px;margin-top:12px}
 </style>
 </head>
 <body>
@@ -32,10 +33,31 @@ body{background:#f1f4f9;padding-bottom:90px}
 <div class="card"><b>🏦 Fund Wallet - Manual Transfer</b><div class="ubaBox"><small>UBA Account Number</small><div class="ubaNum">2370760036</div><div style="font-weight:700">MUSTAPHA MUBARAK</div><button class="copyBtn" onclick="navigator.clipboard.writeText('2370760036');alert('Account copied!')">Copy Account Number</button></div><input id="fAmt" class="input" type="number" placeholder="Amount you sent e.g 5000"><button class="payBtn" onclick="fund()">I Have Paid - Confirm</button><p id="waitMsg" class="hidden" style="text-align:center;color:orange;font-weight:800;margin-top:10px">⏳ Waiting for Admin Approval...</p></div>
 </div>
 
-<div id="p-history" class="hidden"><div class="card"><h3>Transaction History</h3><div id="his"></div></div></div>
-<div id="p-settings" class="hidden"><div class="card"><h3>Settings</h3><div style="padding:14px 0;border-bottom:1px solid #eee" onclick="secretTap()"><b>👤 MUSTAPHA MUBARAK</b><br><small style="color:#888">App v2.1 • Secured 🔒</small> <span id="pendCount" class="hidden" style="background:red;color:white;padding:3px 10px;border-radius:12px;font-size:12px;margin-left:8px">0 Pending</span></div><div id="aB" class="hidden" style="margin-top:12px;padding:14px;background:#f5f7ff;border-radius:14px;border:2px solid #0a1931"><h4>Admin Access</h4><input id="aP" type="password" class="input" placeholder="Enter access code"><button class="payBtn" onclick="unlock()">Unlock Panel</button><div id="aA" class="hidden" style="margin-top:12px"><h4>Pending Approvals:</h4><div id="pL"></div><button class="payBtn" style="background:#ff4444;margin-top:15px" onclick="clearAll()">🗑️ RESET WALLET (DELETE ALL)</button></div></div></div></div>
+<div id="p-services" class="hidden">
+<div class="card"><h3>Buy Airtime & Data - <span id="wb2">₦0.00</span></h3>
 
-<div id="p-services" class="hidden"><div class="card"><h3>Services - <span id="wb2">₦0.00</span></h3><p style="color:#666;margin-bottom:10px">Buy with your wallet balance</p><button class="payBtn" onclick="buy('AIRTIME')">Buy Airtime - ₦50 Demo</button><button class="payBtn" style="background:white;color:#0a1931;border:1.5px solid #0a1931;margin-top:8px" onclick="buy('DATA')">Buy Data - ₦100 Demo</button></div></div>
+<div class="sBox">
+<b>📱 Buy Airtime</b>
+<select id="netA"><option>MTN</option><option>Airtel</option><option>Glo</option><option>9mobile</option></select>
+<input id="phoneA" class="input" placeholder="Phone Number e.g 08012345678">
+<input id="amtA" class="input" type="number" placeholder="Amount e.g 500">
+<button class="payBtn" onclick="buyAirtime()">Buy Airtime</button>
+</div>
+
+<div class="sBox">
+<b>🌐 Buy Data</b>
+<select id="netD"><option>MTN</option><option>Airtel</option><option>Glo</option><option>9mobile</option></select>
+<input id="phoneD" class="input" placeholder="Phone Number e.g 08012345678">
+<input id="amtD" class="input" type="number" placeholder="Amount e.g 1000">
+<button class="payBtn" style="background:#00a651" onclick="buyData()">Buy Data</button>
+</div>
+
+</div>
+</div>
+
+<div id="p-history" class="hidden"><div class="card"><h3>Transaction History</h3><div id="his"></div></div></div>
+
+<div id="p-settings" class="hidden"><div class="card"><h3>Settings</h3><div style="padding:14px 0;border-bottom:1px solid #eee" onclick="secretTap()"><b>👤 MUSTAPHA MUBARAK</b><br><small style="color:#888">App v2.1 • Secured 🔒</small> <span id="pendCount" class="hidden" style="background:red;color:white;padding:3px 10px;border-radius:12px;font-size:12px;margin-left:8px">0 Pending</span></div><div id="aB" class="hidden" style="margin-top:12px;padding:14px;background:#f5f7ff;border-radius:14px;border:2px solid #0a1931"><h4>Admin Access</h4><input id="aP" type="password" class="input" placeholder="Enter access code"><button class="payBtn" onclick="unlock()">Unlock Panel</button><div id="aA" class="hidden" style="margin-top:12px"><h4>Pending Approvals:</h4><div id="pL"></div><button class="payBtn" style="background:#ff4444;margin-top:15px" onclick="clearAll()">🗑️ RESET WALLET</button></div></div></div></div>
 
 <div class="bottom">
 <div class="b-item active" id="n-home" onclick="showP('home')">🏠<br>Home</div>
@@ -49,14 +71,15 @@ let w=parseFloat(localStorage.getItem('musty_wallet')||0),tx=JSON.parse(localSto
 function sv(){localStorage.setItem('musty_wallet',w);localStorage.setItem('musty_tx',JSON.stringify(tx));localStorage.setItem('musty_pending',JSON.stringify(pd));rend()}
 function rend(){let b='₦'+w.toFixed(2);document.getElementById('tb').innerText=b;document.getElementById('ab').innerText=b;document.getElementById('wb2').innerText=b;let h=tx.length==0?'<p style="text-align:center;color:#999;padding:20px">No transaction yet</p>':'';[...tx].reverse().forEach(x=>{let cls=x.s=='Success'?'success':x.s=='Rejected'?'rejected':'pending';h+=`<div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #f0f0f0"><div><b>${x.t}</b><br><span style="font-weight:800">₦${x.a}</span><br><small style="color:#888">${x.d}</small></div><span class="tag ${cls}">${x.s}</span></div>`});document.getElementById('his').innerHTML=h;let p='';if(pd.length==0){p='<p style="color:#888">No pending payments</p>';document.getElementById('dot').classList.add('hidden');document.getElementById('pendCount').classList.add('hidden');document.getElementById('waitMsg').classList.add('hidden')}else{p='';pd.forEach((f,i)=>{p+=`<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #ddd"><div><b>₦${f.a}</b><br><small>${f.d}</small></div><div style="display:flex;gap:6px"><button style="padding:8px 12px;background:#00a651;color:white;border:0;border-radius:8px;font-weight:800" onclick="ap(${i})">Approve</button><button style="padding:8px 12px;background:#ff4444;color:white;border:0;border-radius:8px;font-weight:800" onclick="rj(${i})">Reject</button></div></div>`});document.getElementById('dot').classList.remove('hidden');document.getElementById('dot').innerText=pd.length;document.getElementById('pendCount').classList.remove('hidden');document.getElementById('pendCount').innerText=pd.length+' Pending';document.getElementById('waitMsg').classList.remove('hidden');}document.getElementById('pL').innerHTML=p}
 function showP(p){['home','services','history','settings'].forEach(x=>{document.getElementById('p-'+x).classList.add('hidden');document.getElementById('n-'+x).classList.remove('active')});document.getElementById('p-'+p).classList.remove('hidden');document.getElementById('n-'+p).classList.add('active');rend()}
-function fund(){let a=parseFloat(document.getElementById('fAmt').value);if(!a||a<50)return alert('Enter amount minimum ₦50');let d=new Date().toLocaleString();pd.push({a:a,d:d});tx.push({t:'WALLET FUNDING',a:a,d:d,s:'Pending'});sv();alert('Success! Your funding is pending. Admin will confirm your UBA transfer and approve.');document.getElementById('fAmt').value='';showP('history')}
-function ap(i){let f=pd[i];w+=f.a;for(let j=tx.length-1;j>=0;j--){if(tx[j].a==f.a&&tx[j].s=='Pending'){tx[j].s='Success';break}}pd.splice(i,1);sv();alert('Approved ₦'+f.a+' added to customer wallet!')}
-function rj(i){if(!confirm('Reject this payment? Customer go see Rejected for history.'))return;let f=pd[i];for(let j=tx.length-1;j>=0;j--){if(tx[j].a==f.a&&tx[j].s=='Pending'){tx[j].s='Rejected';break}}pd.splice(i,1);sv()}
+function fund(){let a=parseFloat(document.getElementById('fAmt').value);if(!a||a<50)return alert('Enter amount minimum ₦50');let d=new Date().toLocaleString();pd.push({a:a,d:d});tx.push({t:'WALLET FUNDING',a:a,d:d,s:'Pending'});sv();alert('Success! Pending approval.');document.getElementById('fAmt').value='';showP('history')}
+function ap(i){let f=pd[i];w+=f.a;for(let j=tx.length-1;j>=0;j--){if(tx[j].a==f.a&&tx[j].s=='Pending'){tx[j].s='Success';break}}pd.splice(i,1);sv();alert('Approved ₦'+f.a)}
+function rj(i){if(!confirm('Reject?'))return;let f=pd[i];for(let j=tx.length-1;j>=0;j--){if(tx[j].a==f.a&&tx[j].s=='Pending'){tx[j].s='Rejected';break}}pd.splice(i,1);sv()}
 function secretTap(){taps++;if(taps>=5){document.getElementById('aB').classList.remove('hidden');taps=0;alert('Admin panel opened')}setTimeout(()=>taps=0,3000)}
 function unlock(){if(document.getElementById('aP').value=='2025'){document.getElementById('aA').classList.remove('hidden');rend()}else alert('Wrong code')}
-function buy(t){let price=t=='AIRTIME'?50:100;if(w<price)return alert('Insufficient wallet balance. Fund wallet first.');w-=price;tx.push({t:t+' PURCHASE',a:price,d:new Date().toLocaleString(),s:'Success'});sv();alert(t+' purchase successful!')}
-function clearAll(){if(prompt('Type DELETE to reset all')=='DELETE'){w=0;tx=[];pd=[];sv();alert('Reset done')}}
+function buyAirtime(){let ph=document.getElementById('phoneA').value, am=parseFloat(document.getElementById('amtA').value), net=document.getElementById('netA').value;if(!ph||ph.length<11)return alert('Enter correct phone number');if(!am||am<50)return alert('Enter amount');if(w<am)return alert('Insufficient wallet balance. Fund wallet first.');w-=am;tx.push({t:net+' AIRTIME to '+ph,a:am,d:new Date().toLocaleString(),s:'Success'});sv();alert('Airtime purchase successful!');document.getElementById('phoneA').value='';document.getElementById('amtA').value=''}
+function buyData(){let ph=document.getElementById('phoneD').value, am=parseFloat(document.getElementById('amtD').value), net=document.getElementById('netD').value;if(!ph||ph.length<11)return alert('Enter correct phone number');if(!am||am<50)return alert('Enter amount');if(w<am)return alert('Insufficient wallet balance. Fund wallet first.');w-=am;tx.push({t:net+' DATA to '+ph,a:am,d:new Date().toLocaleString(),s:'Success'});sv();alert('Data purchase successful!');document.getElementById('phoneD').value='';document.getElementById('amtD').value=''}
+function clearAll(){if(prompt('Type DELETE to reset')=='DELETE'){w=0;tx=[];pd=[];sv();alert('Reset done')}}
 rend()
 </script>
 </body>
-</html>
+                                                                                                                          </html>
