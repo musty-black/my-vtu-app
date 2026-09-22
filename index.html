@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MustyPay - Mustapha Mubarak</title>
+<title>MustyPay</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
-body{background:#f1f4f9;padding-bottom:80px}
+body{background:#f1f4f9;padding-bottom:90px}
 .header{background:#0a1931;color:white;padding:18px 16px 28px;border-radius:0 0 26px 26px}
 .top{display:flex;justify-content:space-between;align-items:center}
 .left{display:flex;align-items:center;gap:10px}
@@ -20,28 +20,63 @@ body{background:#f1f4f9;padding-bottom:80px}
 .btn{flex:1;padding:14px;border-radius:14px;border:0;font-weight:800}
 .btnDark{background:#0a1931;color:white}.btnLight{background:#eef2ff;color:#0a1931;border:1.5px solid #d0d8f0}
 .ubaBox{background:linear-gradient(135deg,#0a1931,#1e3a7a);border-radius:18px;padding:18px;text-align:center;color:white;margin-top:12px}
-.ubaNum{font-size:30px;font-weight:900;margin:6px 0;letter-spacing:1px}.ubaName{font-size:14px;margin-bottom:12px}
+.ubaNum{font-size:30px;font-weight:900;margin:6px 0}.ubaName{font-size:14px;margin-bottom:12px}
 .copyBtn{background:white;color:#0a1931;border:0;padding:10px 20px;border-radius:12px;font-weight:800}
 .input,select{width:100%;padding:14px;border:1.5px solid #ddd;border-radius:12px;margin:6px 0}
 .payBtn{width:100%;padding:14px;background:#0a1931;color:white;border:0;border-radius:12px;font-weight:800;margin-top:8px}
-.tag{padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700}
-.pending{background:#fff3cd;color:#856404}.success{background:#d4edda;color:#155724}
-.bottom{position:fixed;bottom:0;left:0;right:0;background:white;display:flex;justify-content:space-around;padding:10px 0 8px;border-top:1px solid #e5e5e5;z-index:10}
-.b-item{text-align:center;font-size:11px;color:#666;font-weight:600;cursor:pointer;padding:6px 16px;border-radius:14px}
-.b-item.active{background:#eef2ff;color:#0a1931}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:white;display:flex;justify-content:space-around;padding:12px 0;border-top:1px solid #ddd;z-index:9999}
+.b-item{text-align:center;font-size:11px;color:#666;font-weight:700;padding:8px 18px;border-radius:16px;cursor:pointer}
+.b-item.active{background:#0a1931;color:white}
 .serviceGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.s-btn{background:#eef2ff;border-radius:16px;padding:16px 6px;text-align:center;font-weight:700;font-size:12px;cursor:pointer;display:flex;flex-direction:column;gap:6px;align-items:center}
-.s-btn span{font-size:22px}.settingsItem{display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid #f0f0f0}
-.settingsItem b{font-size:14px}.settingsItem small{color:#888;font-size:12px}
-.hidden{display:none}
+.s-btn{background:#eef2ff;border-radius:16px;padding:16px 6px;text-align:center;font-weight:700;font-size:12px;display:flex;flex-direction:column;gap:6px;align-items:center}
+.s-btn span{font-size:22px}
+.settingsItem{display:flex;justify-content:space-between;padding:16px 0;border-bottom:1px solid #f0f0f0}
+.hidden{display:none}.tag{padding:3px 8px;border-radius:10px;font-size:11px}.pending{background:#fff3cd}.success{background:#d4edda}
 </style>
 </head>
 <body>
-<div class="header"><div class="top"><div class="left"><div class="logo">M</div><div><b>MustyPay</b><br><small>Hi, Musty 👋</small></div></div><div class="bal-right"><small>Total Balance</small><b id="totalBal">₦0.00</b></div></div></div>
+<div class="header"><div class="top"><div class="left"><div class="logo">M</div><div><b>MustyPay</b><br><small>Hi, Musty 👋</small></div></div><div class="bal-right"><small>Total Balance</small><b id="tb">₦0.00</b></div></div></div>
 
-<div id="page-home">
-<div class="card"><div class="availRow"><span style="color:#666;font-size:14px">Available Balance ⊙</span><span class="adminBadge">ADMIN • 1234</span></div><div class="amount" id="availBal">₦0.00</div><div class="btnRow"><button class="btn btnDark" onclick="showPage('home')">+ Fund Wallet</button><button class="btn btnLight" onclick="showPage('history')">🕘 History</button></div></div>
-<div class="card">
-<div style="font-weight:900;font-size:18px">🗂️ Fund Wallet</div>
-<div style="color:#666;font-size:13px;margin:4px 0 12px">Transfer to your UBA and click I Have Paid</div>
-<div class="ubaBox"><small>UBA BANK ACCOUNT</small><div class="ubaNum">2370760036</div><div class="ubaName">MUSTAPHA MUBARAK</div><button class="
+<div id="p-home">
+<div class="card"><div class="availRow"><span style="color:#666">Available Balance ⊙</span><span class="adminBadge">ADMIN • 1234</span></div><div class="amount" id="ab">₦0.00</div><div class="btnRow"><button class="btn btnDark">+ Fund Wallet</button><button class="btn btnLight" onclick="showP('history')">🕘 History</button></div></div>
+<div class="card"><div style="font-weight:900">📁 Fund Wallet</div><small style="color:#666">Transfer to your UBA and click I Have Paid</small><div class="ubaBox"><small>UBA BANK ACCOUNT</small><div class="ubaNum">2370760036</div><div class="ubaName">MUSTAPHA MUBARAK</div><button class="copyBtn" onclick="navigator.clipboard.writeText('2370760036');alert('Copied')">Copy Number</button></div><div style="margin-top:14px"><b style="font-size:13px">Amount you sent (₦)</b><input id="fAmt" class="input" type="number"><button class="payBtn" onclick="fund()">I Have Paid</button></div></div>
+</div>
+
+<div id="p-services" class="hidden"><div class="card"><h3>Services</h3><div class="serviceGrid" style="margin-top:14px"><div class="s-btn" onclick="oF('airtime')"><span>📱</span>Airtime</div><div class="s-btn" onclick="oF('data')"><span>📊</span>Data</div><div class="s-btn" onclick="oF('tv')"><span>📺</span>TV</div><div class="s-btn" onclick="oF('elec')"><span>💡</span>Electric</div><div class="s-btn" style="background:#ffe0e0" onclick="oF('bet')"><span>⚽</span>Betting</div><div class="s-btn" onclick="oF('exam')"><span>🎓</span>Exam</div><div class="s-btn" onclick="oF('smile')"><span>😊</span>Smile</div><div class="s-btn" onclick="oF('spec')"><span>📡</span>Spec</div></div></div><div class="card hidden" id="fBox"><div id="fa" class="hidden"><h3>Airtime</h3><input id="ph" class="input" placeholder="Phone"><input id="am" class="input" type="number" placeholder="Amount"><button class="payBtn" onclick="buy('AIRTIME')">Buy</button></div><div id="fb" class="hidden"><h3>Betting</h3><select class="input"><option>Bet9ja</option><option>1xBet</option><option>SportyBet</option></select><input id="bA" class="input" type="number" placeholder="Amount"><button class="payBtn" style="background:#b91c1c" onclick="buy('BETTING')">Fund Betting</button></div><div id="fd" class="hidden"><h3>Data</h3><button class="payBtn" onclick="buy('DATA')">Buy Data</button></div><div id="ft" class="hidden"><h3>TV</h3><button class="payBtn" onclick="buy('TV')">Pay</button></div><div id="fe" class="hidden"><h3>Electric</h3><button class="payBtn" onclick="buy('ELEC')">Pay</button></div><div id="fx" class="hidden"><h3>Exam</h3><button class="payBtn" onclick="buy('EXAM')">Buy</button></div><button class="payBtn" style="background:#eee;color:#333" onclick="document.getElementById('fBox').classList.add('hidden')">Back</button></div></div>
+
+<div id="p-history" class="hidden"><div class="card"><h3>History</h3><div id="his" style="margin-top:10px"></div></div></div>
+
+<div id="p-settings" class="hidden"><div class="card"><h3>Settings - Like Opay</h3>
+<div class="settingsItem"><b>👤 Account - MUSTAPHA MUBARAK</b><span>›</span></div>
+<div class="settingsItem"><b>🔐 Security & Password</b><span>›</span></div>
+<div class="settingsItem"><b>🔔 Notifications</b><span>›</span></div>
+<div class="settingsItem"><b>💳 Bank Card - UBA 2370760036</b><span>›</span></div>
+<div class="settingsItem"><b>📄 KYC Verification</b><span>›</span></div>
+<div class="settingsItem"><b>🎁 Refer & Earn</b><span>›</span></div>
+<div class="settingsItem"><b>❓ Help & Support</b><span>›</span></div>
+<div class="settingsItem"><b>📜 About MustyPay</b><span>›</span></div>
+<div class="settingsItem" onclick="document.getElementById('aB').classList.toggle('hidden')"><b>🛡️ Admin - PIN 1234</b><span>›</span></div>
+<div id="aB" class="hidden" style="padding:10px;background:#f5f5f5;border-radius:12px;margin-top:8px"><input id="aP" type="password" class="input" placeholder="1234"><button class="payBtn" onclick="if(document.getElementById('aP').value=='1234'){document.getElementById('aA').classList.remove('hidden');rend()}else alert('wrong')">Unlock Admin</button><div id="aA" class="hidden"><div id="pL"></div></div></div>
+</div></div>
+
+<!-- DOWN BUTTONS - THIS IS WHAT YOU ASKED FOR -->
+<div class="bottom">
+<div class="b-item active" id="n-home" onclick="showP('home')">🏠<br>Home</div>
+<div class="b-item" id="n-services" onclick="showP('services')">🗂️<br>Services</div>
+<div class="b-item" id="n-history" onclick="showP('history')">☰<br>History</div>
+<div class="b-item" id="n-settings" onclick="showP('settings')">⚙️<br>Settings</div>
+</div>
+
+<script>
+let w=parseFloat(localStorage.getItem('w')||0),tx=JSON.parse(localStorage.getItem('t')||'[]'),pd=JSON.parse(localStorage.getItem('p')||'[]');
+function sv(){localStorage.setItem('w',w);localStorage.setItem('t',JSON.stringify(tx));localStorage.setItem('p',JSON.stringify(pd));rend()}
+function rend(){document.getElementById('tb').innerText='₦'+w.toFixed(2);document.getElementById('ab').innerText='₦'+w.toFixed(2);let h='';if(tx.length==0)h='No transaction';else [...tx].reverse().forEach(x=>{h+=`<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #eee"><div><b>${x.t}</b> ₦${x.a}<br><small>${x.d}</small></div><span class="tag ${x.s=='Success'?'success':'pending'}">${x.s}</span></div>`});document.getElementById('his').innerHTML=h;let p='';if(pd.length==0)p='No pending';else pd.forEach((f,i)=>{p+=`<div style="display:flex;justify-content:space-between;padding:8px 0"><div>₦${f.a}<br><small>${f.d}</small></div><button class="payBtn" style="width:auto;background:green" onclick="ap(${i})">Approve</button></div>`});document.getElementById('pL').innerHTML=p}
+function showP(p){document.getElementById('p-home').classList.add('hidden');document.getElementById('p-services').classList.add('hidden');document.getElementById('p-history').classList.add('hidden');document.getElementById('p-settings').classList.add('hidden');document.getElementById('p-'+p).classList.remove('hidden');document.querySelectorAll('.b-item').forEach(b=>b.classList.remove('active'));document.getElementById('n-'+p).classList.add('active');rend()}
+function fund(){let a=parseFloat(document.getElementById('fAmt').value);if(!a)return alert('Enter amount');let d=new Date().toLocaleString();pd.push({a:a,d:d});tx.push({t:'FUNDING',a:a,d:d,s:'Pending'});sv();showP('history')}
+function ap(i){let f=pd[i];w+=f.a;for(let j=tx.length-1;j>=0;j--)if(tx[j].a==f.a&&tx[j].s=='Pending'){tx[j].s='Success';break}pd.splice(i,1);sv()}
+function oF(n){document.getElementById('fBox').classList.remove('hidden');document.getElementById('fa').classList.add('hidden');document.getElementById('fb').classList.add('hidden');document.getElementById('fd').classList.add('hidden');document.getElementById('ft').classList.add('hidden');document.getElementById('fe').classList.add('hidden');document.getElementById('fx').classList.add('hidden');if(n=='airtime')document.getElementById('fa').classList.remove('hidden');if(n=='bet')document.getElementById('fb').classList.remove('hidden');if(n=='data')document.getElementById('fd').classList.remove('hidden');if(n=='tv')document.getElementById('ft').classList.remove('hidden');if(n=='elec')document.getElementById('fe').classList.remove('hidden');if(n=='exam')document.getElementById('fx').classList.remove('hidden');}
+function buy(t){let a=parseFloat(document.getElementById('am')?.value)||parseFloat(document.getElementById('bA')?.value)||200;if(w<a)return alert('Fund first');w-=a;tx.push({t:t,a:a,d:new Date().toLocaleString(),s:'Success'});sv();showP('history')}
+rend()
+</script>
+</body>
+  </html>
