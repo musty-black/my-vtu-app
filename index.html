@@ -3,91 +3,81 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MustyPay - Mustapha Mubarak</title>
+<title>My VTU App - Mustapha Mubarak</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
-body{background:#f2f4f7;padding-bottom:80px}
-.header{background:#0b1e3a;color:white;padding:18px 16px 26px 16px;border-radius:0 0 26px 26px}
-.top{display:flex;justify-content:space-between;align-items:center}
-.left{display:flex;align-items:center;gap:10px}
-.logo{width:42px;height:42px;background:white;color:#0b1e3a;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900}
-.small{font-size:13px;opacity:.9}
-.bal-big{font-size:13px;text-align:right;opacity:.8}
-.bal-big b{display:block;font-size:20px;opacity:1}
-.card{background:white;border-radius:18px;padding:16px;margin:14px;box-shadow:0 4px 12px rgba(0,0,0,.05)}
-.avail{font-size:14px;color:#555;display:flex;align-items:center;gap:6px}
-.amount{font-size:38px;font-weight:900;margin:8px 0}
-.btn-row{display:flex;gap:12px;margin-top:10px}
-.btn{flex:1;padding:14px;border-radius:14px;border:0;font-weight:700}
-.btn-dark{background:#0b1e3a;color:white}
-.btn-light{background:#e8eef7;color:#0b1e3a;border:1px solid #0b1e3a}
-.fund-title{font-weight:900;font-size:18px;display:flex;gap:8px;align-items:center}
-.uba-box{background:linear-gradient(135deg,#0b1e3a,#1a3a6b);color:white;border-radius:18px;padding:20px;text-align:center;margin-top:12px}
-.uba-box small{opacity:.8;letter-spacing:1px}
-.uba-num{font-size:32px;font-weight:900;margin:8px 0;letter-spacing:1px}
-.uba-name{font-size:15px;margin-bottom:14px}
-.copyBtn{background:white;color:#0b1e3a;border:0;padding:12px 22px;border-radius:12px;font-weight:800}
-.input{width:100%;padding:14px;border:1.5px solid #ddd;border-radius:12px;margin-top:10px}
-.payBtn{width:100%;margin-top:12px;background:#0b1e3a;color:white;padding:14px;border:0;border-radius:12px;font-weight:800}
-.tag{padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700}
+body{background:#f0f2f8;padding-bottom:80px}
+.header{background:#0a1250;color:white;padding:24px 20px 30px 20px;border-radius:0 0 28px 28px;text-align:center}
+.header h1{font-size:26px;font-weight:900}
+.header p{margin:6px 0;opacity:.9}
+.bal{font-size:40px;font-weight:900;margin:10px 0}
+.fundMain{width:100%;padding:16px;background:white;color:#0a1250;border:0;border-radius:14px;font-weight:900;font-size:16px;margin-top:12px}
+.smallUBA{font-size:12px;opacity:.7;margin-top:10px}
+.card{background:white;border-radius:20px;padding:16px;margin:14px;box-shadow:0 4px 12px rgba(0,0,0,.05)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.s-btn{background:#eef2ff;padding:16px;border-radius:14px;text-align:center;font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer}
+.s-btn:active{transform:scale(.96)}
+.s-btn.bet{background:#fff0f0}
+.s-btn.exam{background:#e8fdf0}
+.trans-item{padding:10px 0;border-bottom:1px solid #eee;display:flex;gap:8px}
+.tag{padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700}
 .pending{background:#fff3cd;color:#856404}.success{background:#d4edda;color:#155724}.failed{background:#f8d7da;color:#721c24}
-.bottom{position:fixed;bottom:0;left:0;right:0;background:white;display:flex;justify-content:space-around;padding:10px 0;border-top:1px solid #ddd}
-.b-item{text-align:center;font-size:12px;color:#555}
-.b-item.active{color:#0b1e3a;background:#e8eef7;padding:6px 16px;border-radius:14px}
+.input,select{width:100%;padding:14px;border:1.5px solid #ddd;border-radius:12px;margin:6px 0}
+.btn{width:100%;padding:14px;background:#0a1250;color:white;border:0;border-radius:12px;font-weight:800}
 .hidden{display:none}
-.admin-badge{background:#1a1a1a;color:white;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:800;float:right;margin-top:-10px}
 </style>
 </head>
 <body>
 <div class="header">
-<div class="top">
-<div class="left"><div class="logo">M</div><div><b>MustyPay</b><br><span class="small">Hi, Mustapha Mubarak 👋</span></div></div>
-<div class="bal-big">Total Balance<b id="totalBal">₦0.00</b></div>
-</div>
+<h1>My VTU App 🇳🇬</h1>
+<p>Welcome, Musty!</p>
+<p>Wallet Balance</p>
+<div class="bal" id="bal">₦ 0.00</div>
+<button class="fundMain" onclick="openFund()">Fund Wallet</button>
+<div class="smallUBA">UBA • Mustapha Mubarak • 2370760036</div>
 </div>
 
 <div class="card">
-<div style="display:flex;justify-content:space-between"><span class="avail">Available Balance ⊙</span><span class="admin-badge">ADMIN • 2025</span></div>
-<div class="amount" id="availBal">₦0.00</div>
-<div class="btn-row">
-<button class="btn btn-dark" onclick="showFund()">+ Fund Wallet</button>
-<button class="btn btn-light" onclick="showHistory()">🕘 History</button>
+<div class="grid">
+<div class="s-btn" onclick="openS('airtime')">📱 Airtime</div>
+<div class="s-btn" onclick="openS('data')">📶 Data</div>
+<div class="s-btn" onclick="openS('tv')">📺 TV Sub</div>
+<div class="s-btn" onclick="openS('electric')">💡 Electricity</div>
+<div class="s-btn bet" onclick="openS('betting')">⚽ Betting</div>
+<div class="s-btn exam" onclick="openS('exam')">🎓 Exam Pin</div>
+<div class="s-btn" onclick="openS('smile')">😊 Smile</div>
+<div class="s-btn" onclick="openS('spectra')">📡 Spectranet</div>
 </div>
 </div>
 
-<div class="card" id="fundCard">
-<div class="fund-title">🗂️ Fund Wallet</div>
-<div style="font-size:13px;color:#666;margin-top:4px">Transfer to your UBA and click I Have Paid</div>
-<div class="uba-box">
-<small>UBA BANK ACCOUNT</small>
-<div class="uba-num">2370760036</div>
-<div class="uba-name">MUSTAPHA MUBARAK</div>
-<button class="copyBtn" onclick="copyNum()">Copy Number</button>
-</div>
-<div style="margin-top:16px"><b>Amount you sent (₦)</b><input id="sentAmount" class="input" type="number" placeholder="e.g 1000"><button class="payBtn" onclick="iHavePaid()">I Have Paid</button></div>
+<div class="card hidden" id="fundBox">
+<h3>Fund Wallet</h3>
+<p style="font-size:13px;color:#555">Transfer to UBA 2370760036 - MUSTAPHA MUBARAK</p>
+<input id="fundAmt" type="number" class="input" placeholder="Amount you sent e.g 1000">
+<button class="btn" onclick="fundNow()">I Have Paid - Show Pending</button>
+<button class="btn" style="background:#eee;color:#333;margin-top:8px" onclick="closeAll()">Cancel</button>
 </div>
 
-<div class="card hidden" id="historyCard">
-<h3>Transaction History</h3>
-<div style="font-size:12px;color:#888;margin-bottom:8px">You will see PENDING here after you click I Have Paid</div>
-<div id="history"></div>
+<div class="card hidden" id="form-airtime"><h3>Buy Airtime</h3><select id="net"><option>MTN</option><option>GLO</option><option>AIRTEL</option><option>9MOBILE</option></select><input id="phone" class="input" placeholder="080..."><input id="amt" class="input" type="number" placeholder="Amount"><button class="btn" onclick="buy('AIRTIME')">Buy Now</button></div>
+<div class="card hidden" id="form-data"><h3>Buy Data</h3><select><option>MTN</option><option>GLO</option><option>AIRTEL</option><option>9MOBILE</option></select><select class="input"><option>500MB ₦150</option><option>1GB ₦270</option><option>2GB ₦540</option></select><input class="input" placeholder="Phone"><button class="btn" onclick="buy('DATA')">Buy Data</button></div>
+<div class="card hidden" id="form-tv"><h3>TV Subscription</h3><select class="input"><option>DSTV</option><option>GOTV</option><option>StarTimes</option></select><input class="input" placeholder="Smartcard"><input class="input" type="number" placeholder="Amount"><button class="btn" onclick="buy('TV SUB')">Pay TV</button></div>
+<div class="card hidden" id="form-electric"><h3>Electricity</h3><select class="input"><option>IKEDC</option><option>KEDCO</option><option>AEDC</option></select><input class="input" placeholder="Meter No"><input class="input" type="number" placeholder="Amount"><button class="btn" onclick="buy('ELECTRICITY')">Pay</button></div>
+<div class="card hidden" id="form-betting"><h3>⚽ Fund Betting Wallet</h3><select class="input"><option>Bet9ja</option><option>1xBet</option><option>SportyBet</option><option>BetKing</option><option>NaijaBet</option></select><input class="input" placeholder="Betting User ID"><input id="betAmt" class="input" type="number" placeholder="Amount"><button class="btn" style="background:#b91c1c" onclick="buyBet()">Fund Betting</button></div>
+<div class="card hidden" id="form-exam"><h3>Exam Pin</h3><select class="input"><option>WAEC</option><option>NECO</option><option>JAMB</option></select><input class="input" type="number" placeholder="Quantity"><button class="btn" onclick="buy('EXAM PIN')">Buy Pin</button></div>
+<div class="card hidden" id="form-smile"><h3>Smile</h3><input class="input" placeholder="Smile ID"><input class="input" type="number" placeholder="Amount"><button class="btn" onclick="buy('SMILE')">Pay Smile</button></div>
+<div class="card hidden" id="form-spectra"><h3>Spectranet</h3><input class="input" placeholder="Account ID"><input class="input" type="number" placeholder="Amount"><button class="btn" onclick="buy('SPECTRANET')">Pay</button></div>
+
+<div class="card">
+<h3>Recent Transactions</h3>
+<div style="font-size:11px;color:#888">Funding go show PENDING first, then SUCCESS after admin approve</div>
+<div id="history" style="margin-top:10px"></div>
 </div>
 
-<div class="card hidden" id="adminCard" style="border:2px dashed #0b1e3a">
-<h3>Admin Panel - PIN 2025</h3>
-<input id="adminPin" type="password" class="input" placeholder="Enter PIN 2025">
-<button class="payBtn" onclick="unlockAdmin()">Unlock Admin</button>
-<div id="adminArea" class="hidden" style="margin-top:12px">
-<h4>Pending Requests - Approve to change Pending → Successful</h4>
-<div id="pendingList"></div>
-</div>
-</div>
-
-<div class="bottom">
-<div class="b-item active" onclick="showFund()"><div>⌂</div>Home</div>
-<div class="b-item" onclick="showFund()"><div>⊕</div>Fund</div>
-<div class="b-item" onclick="showHistory()"><div>☰</div>History</div>
-<div class="b-item" onclick="showAdmin()"><div>◉</div>Admin</div>
+<div class="card" style="border:2px dashed #0a1250">
+<h3>ADMIN PANEL - PIN 2025</h3>
+<input id="adminPin" type="password" class="input" placeholder="Enter 2025">
+<button class="btn" onclick="unlockAdmin()">Unlock</button>
+<div id="adminArea" class="hidden"><div id="pendingList" style="margin-top:10px"></div></div>
 </div>
 
 <script>
@@ -96,24 +86,4 @@ let tx=JSON.parse(localStorage.getItem('transactions')||'[]');
 let pending=JSON.parse(localStorage.getItem('pendingFundings')||'[]');
 function save(){localStorage.setItem('wallet',wallet);localStorage.setItem('transactions',JSON.stringify(tx));localStorage.setItem('pendingFundings',JSON.stringify(pending));render();}
 function render(){
- document.getElementById('totalBal').innerText='₦'+wallet.toFixed(2);
- document.getElementById('availBal').innerText='₦'+wallet.toFixed(2);
- let h=''; if(tx.length==0) h='<div style="color:#888;font-size:13px">No transaction yet. Fund wallet to see Pending</div>';
- else [...tx].reverse().forEach(t=>{let cls=t.status=='Success'?'success':t.status=='Failed'?'failed':'pending';h+=`<div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #eee"><div><b>${t.type}</b> ₦${t.amount}<br><small style="color:#888">${t.date}</small></div><span class="tag ${cls}">${t.status}</span></div>`});
- document.getElementById('history').innerHTML=h;
- let p=''; if(pending.length==0) p='<div style="color:#888;font-size:13px">No pending request</div>';
- else pending.forEach((f,i)=>{p+=`<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #eee"><div><b>₦${f.amount}</b><br><small>${f.date}</small><br><span class="tag pending">Pending</span></div><div style="display:flex;gap:6px"><button class="payBtn" style="width:auto;padding:8px 12px;background:#0a7a0a" onclick="approve(${i})">Approve</button><button class="payBtn" style="width:auto;padding:8px 12px;background:#c0392b" onclick="decline(${i})">Decline</button></div></div>`});
- document.getElementById('pendingList').innerHTML=p;
-}
-function showFund(){document.getElementById('fundCard').classList.remove('hidden');document.getElementById('historyCard').classList.add('hidden');document.getElementById('adminCard').classList.add('hidden');}
-function showHistory(){document.getElementById('fundCard').classList.add('hidden');document.getElementById('historyCard').classList.remove('hidden');document.getElementById('adminCard').classList.add('hidden');render();}
-function showAdmin(){document.getElementById('fundCard').classList.add('hidden');document.getElementById('historyCard').classList.add('hidden');document.getElementById('adminCard').classList.remove('hidden');}
-function copyNum(){navigator.clipboard.writeText('2370760036');alert('2370760036 Copied - MUSTAPHA MUBARAK');}
-function iHavePaid(){let a=parseFloat(document.getElementById('sentAmount').value);if(!a)return alert('Enter amount you sent');let now=new Date().toLocaleString();pending.push({amount:a,date:now});tx.push({type:'WALLET FUNDING',amount:a,date:now,status:'Pending'});save();document.getElementById('sentAmount').value='';alert('₦'+a+' is now PENDING. Go to History to see am, then Admin to approve to SUCCESSFUL');showHistory();}
-function approve(i){let f=pending[i];wallet+=parseFloat(f.amount);for(let j=tx.length-1;j>=0;j--){if(tx[j].amount==f.amount&&tx[j].status=='Pending'){tx[j].status='Success';break;}}pending.splice(i,1);save();alert('Approved! Pending → Successful. Balance updated');}
-function decline(i){let f=pending[i];for(let j=tx.length-1;j>=0;j--){if(tx[j].amount==f.amount&&tx[j].status=='Pending'){tx[j].status='Failed';break;}}pending.splice(i,1);save();}
-function unlockAdmin(){if(document.getElementById('adminPin').value=='2025'){document.getElementById('adminArea').classList.remove('hidden');render();}else alert('Wrong PIN - use 2025');}
-render();
-</script>
-</body>
-</html>
+ document.getElementById('bal').innerText='₦ '+
