@@ -11,148 +11,37 @@ body{background:#f1f4f9;padding-bottom:80px}
 .top{display:flex;justify-content:space-between;align-items:center}
 .left{display:flex;align-items:center;gap:10px}
 .logo{width:44px;height:44px;background:white;color:#0a1931;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900}
-.bal-right{text-align:right}
-.bal-right b{font-size:22px;display:block}
+.bal-right{text-align:right}.bal-right b{font-size:22px;display:block}
 .card{background:white;border-radius:20px;padding:16px;margin:12px;box-shadow:0 4px 14px rgba(0,0,0,.06)}
 .availRow{display:flex;justify-content:space-between;align-items:center}
 .adminBadge{background:#111;color:white;padding:6px 14px;border-radius:18px;font-size:11px;font-weight:800}
 .amount{font-size:42px;font-weight:900;margin:10px 0}
 .btnRow{display:flex;gap:10px;margin-top:8px}
 .btn{flex:1;padding:14px;border-radius:14px;border:0;font-weight:800}
-.btnDark{background:#0a1931;color:white}
-.btnLight{background:#eef2ff;color:#0a1931;border:1.5px solid #d0d8f0}
+.btnDark{background:#0a1931;color:white}.btnLight{background:#eef2ff;color:#0a1931;border:1.5px solid #d0d8f0}
 .ubaBox{background:linear-gradient(135deg,#0a1931,#1e3a7a);border-radius:18px;padding:18px;text-align:center;color:white;margin-top:12px}
-.ubaNum{font-size:30px;font-weight:900;margin:6px 0;letter-spacing:1px}
-.ubaName{font-size:14px;margin-bottom:12px}
+.ubaNum{font-size:30px;font-weight:900;margin:6px 0;letter-spacing:1px}.ubaName{font-size:14px;margin-bottom:12px}
 .copyBtn{background:white;color:#0a1931;border:0;padding:10px 20px;border-radius:12px;font-weight:800}
 .input,select{width:100%;padding:14px;border:1.5px solid #ddd;border-radius:12px;margin:6px 0}
 .payBtn{width:100%;padding:14px;background:#0a1931;color:white;border:0;border-radius:12px;font-weight:800;margin-top:8px}
 .tag{padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700}
-.pending{background:#fff3cd;color:#856404}.success{background:#d4edda;color:#155724}.failed{background:#f8d7da;color:#721c24}
+.pending{background:#fff3cd;color:#856404}.success{background:#d4edda;color:#155724}
 .bottom{position:fixed;bottom:0;left:0;right:0;background:white;display:flex;justify-content:space-around;padding:10px 0 8px;border-top:1px solid #e5e5e5;z-index:10}
 .b-item{text-align:center;font-size:11px;color:#666;font-weight:600;cursor:pointer;padding:6px 16px;border-radius:14px}
 .b-item.active{background:#eef2ff;color:#0a1931}
 .serviceGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 .s-btn{background:#eef2ff;border-radius:16px;padding:16px 6px;text-align:center;font-weight:700;font-size:12px;cursor:pointer;display:flex;flex-direction:column;gap:6px;align-items:center}
-.s-btn span{font-size:22px}
-.s-btn:active{transform:scale(.93)}
-.settingsItem{display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid #f0f0f0;cursor:pointer}
-.settingsItem b{font-size:14px}
-.settingsItem small{color:#888;font-size:12px}
+.s-btn span{font-size:22px}.settingsItem{display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid #f0f0f0}
+.settingsItem b{font-size:14px}.settingsItem small{color:#888;font-size:12px}
 .hidden{display:none}
 </style>
 </head>
 <body>
-<div class="header">
-<div class="top"><div class="left"><div class="logo">M</div><div><b>MustyPay</b><br><small>Hi, Musty 👋</small></div></div><div class="bal-right"><small>Total Balance</small><b id="totalBal">₦0.00</b></div></div>
-</div>
+<div class="header"><div class="top"><div class="left"><div class="logo">M</div><div><b>MustyPay</b><br><small>Hi, Musty 👋</small></div></div><div class="bal-right"><small>Total Balance</small><b id="totalBal">₦0.00</b></div></div></div>
 
 <div id="page-home">
+<div class="card"><div class="availRow"><span style="color:#666;font-size:14px">Available Balance ⊙</span><span class="adminBadge">ADMIN • 1234</span></div><div class="amount" id="availBal">₦0.00</div><div class="btnRow"><button class="btn btnDark" onclick="showPage('home')">+ Fund Wallet</button><button class="btn btnLight" onclick="showPage('history')">🕘 History</button></div></div>
 <div class="card">
-<div class="availRow"><span style="color:#666;font-size:14px">Available Balance ⊙</span><span class="adminBadge">ADMIN • 1234</span></div>
-<div class="amount" id="availBal">₦0.00</div>
-<div class="btnRow"><button class="btn btnDark" onclick="focusFund()">+ Fund Wallet</button><button class="btn btnLight" onclick="showPage('history')">🕘 History</button></div>
-</div>
-<div class="card">
-<div style="font-weight:900;font-size:18px;display:flex;gap:8px">🗂️ Fund Wallet</div>
+<div style="font-weight:900;font-size:18px">🗂️ Fund Wallet</div>
 <div style="color:#666;font-size:13px;margin:4px 0 12px">Transfer to your UBA and click I Have Paid</div>
-<div class="ubaBox"><small>UBA BANK ACCOUNT</small><div class="ubaNum">2370760036</div><div class="ubaName">MUSTAFA KHALIFA SALISU</div><button class="copyBtn" onclick="copyNum()">Copy Number</button></div>
-<div style="margin-top:16px"><b style="font-size:13px">Amount you sent (₦)</b><input id="fundAmt" class="input" type="number" placeholder=""><button class="payBtn" onclick="fundNow()">I Have Paid</button></div>
-</div>
-</div>
-
-<div id="page-services" class="hidden">
-<div class="card"><h3>All Services</h3><p style="color:#666;font-size:13px;margin-top:4px">Choose service - like Opay</p>
-<div class="serviceGrid" style="margin-top:16px">
-<div class="s-btn" onclick="openForm('airtime')"><span>📱</span>Airtime</div>
-<div class="s-btn" onclick="openForm('data')"><span>📊</span>Data</div>
-<div class="s-btn" onclick="openForm('tv')"><span>📺</span>TV Sub</div>
-<div class="s-btn" onclick="openForm('electric')"><span>💡</span>Electric</div>
-<div class="s-btn" style="background:#fff0f0" onclick="openForm('betting')"><span>⚽</span>Betting</div>
-<div class="s-btn" onclick="openForm('exam')"><span>🎓</span>Exam Pin</div>
-<div class="s-btn" onclick="openForm('smile')"><span>😊</span>Smile</div>
-<div class="s-btn" onclick="openForm('spectra')"><span>📡</span>Spectranet</div>
-</div>
-</div>
-<div class="card hidden" id="serviceForms">
-<div id="form-airtime" class="hidden"><h3>Buy Airtime</h3><select class="input"><option>MTN</option><option>GLO</option><option>AIRTEL</option><option>9MOBILE</option></select><input id="phone" class="input" placeholder="Phone"><input id="amt" class="input" type="number" placeholder="Amount"><button class="payBtn" onclick="buy('AIRTIME')">Buy Airtime</button></div>
-<div id="form-data" class="hidden"><h3>Buy Data</h3><select class="input"><option>MTN 500MB ₦150</option><option>MTN 1GB ₦270</option></select><input class="input" placeholder="Phone Number"><button class="payBtn" onclick="buy('DATA')">Buy Data</button></div>
-<div id="form-tv" class="hidden"><h3>TV Subscription</h3><select class="input"><option>DSTV</option><option>GOTV</option><option>StarTimes</option></select><input class="input" placeholder="Smartcard Number"><input class="input" type="number" placeholder="Amount"><button class="payBtn" onclick="buy('TV')">Pay TV</button></div>
-<div id="form-electric" class="hidden"><h3>Electricity</h3><select class="input"><option>IKEDC</option><option>KEDCO</option><option>AEDC</option></select><input class="input" placeholder="Meter No"><input class="input" type="number" placeholder="Amount"><button class="payBtn" onclick="buy('ELECTRIC')">Pay Electric</button></div>
-<div id="form-betting" class="hidden"><h3>⚽ Betting Funding</h3><select class="input"><option>Bet9ja</option><option>1xBet</option><option>SportyBet</option><option>BetKing</option></select><input class="input" placeholder="Betting User ID"><input id="betAmt" class="input" type="number" placeholder="Amount"><button class="payBtn" style="background:#b91c1c" onclick="buy('BETTING')">Fund Betting Account</button></div>
-<div id="form-exam" class="hidden"><h3>Exam Pin</h3><select class="input"><option>WAEC</option><option>NECO</option><option>JAMB</option></select><input class="input" type="number" placeholder="Quantity"><button class="payBtn" onclick="buy('EXAM')">Buy Pin</button></div>
-<div id="form-smile" class="hidden"><h3>Smile</h3><input class="input" placeholder="Smile ID"><button class="payBtn" onclick="buy('SMILE')">Pay</button></div>
-<div id="form-spectra" class="hidden"><h3>Spectranet</h3><input class="input" placeholder="Account ID"><button class="payBtn" onclick="buy('SPECTRA')">Pay</button></div>
-<button class="payBtn" style="background:#eee;color:#333;margin-top:10px" onclick="closeForms()">⬅ Back to Services</button>
-</div>
-</div>
-
-<div id="page-history" class="hidden">
-<div class="card"><h3>Recent Transactions</h3><p style="color:#888;font-size:11px">Funding shows PENDING first then SUCCESS after approve</p><div id="history" style="margin-top:12px"></div></div>
-</div>
-
-<div id="page-settings" class="hidden">
-<div class="card">
-<h3>Settings</h3>
-<div class="settingsItem"><div><b>👤 Account Information</b><br><small>View your profile</small></div><span>›</span></div>
-<div class="settingsItem"><div><b>🔐 Security & Password</b><br><small>Change PIN, password</small></div><span>›</span></div>
-<div class="settingsItem"><div><b>🔔 Notification Settings</b><br><small>Manage alerts</small></div><span>›</span></div>
-<div class="settingsItem"><div><b>💳 Bank Account & Card</b><br><small>UBA 2370760036</small></div><span>›</span></div>
-<div class="settingsItem"><div><b>📄 KYC Verification</b><br><small>Verify your identity</small></div><span>›</span></div>
-<div class="settingsItem"><div><b>🎁 Refer & Earn</b><br><small>Invite friends, earn bonus</small></div><span>›</span></div>
-<div class="settingsItem"><div><b>❓ Help & Support</b><br><small>Contact us</small></div><span>›</span></div>
-<div class="settingsItem"><div><b>📜 About MustyPay</b><br><small>Version 1.0.0</small></div><span>›</span></div>
-<div class="settingsItem" onclick="document.getElementById('adminBox').classList.toggle('hidden')"><div><b>🛡️ Admin Panel</b><br><small>Approve fundings - PIN 1234</small></div><span>›</span></div>
-<div id="adminBox" class="hidden" style="margin-top:12px;padding:12px;background:#f9f9f9;border-radius:12px;border:1px dashed #0a1931">
-<input id="adminPin" type="password" class="input" placeholder="Enter PIN 1234">
-<button class="payBtn" onclick="unlockAdmin()">Unlock Admin</button>
-<div id="adminArea" class="hidden"><div id="pendingList" style="margin-top:10px"></div></div>
-</div>
-<button class="payBtn" style="background:#ff4444;margin-top:16px">Log Out</button>
-</div>
-</div>
-
-<div class="bottom">
-<div class="b-item active" id="nav-home" onclick="showPage('home')">🏠<br>Home</div>
-<div class="b-item" id="nav-services" onclick="showPage('services')">🗂️<br>Services</div>
-<div class="b-item" id="nav-history" onclick="showPage('history')">☰<br>History</div>
-<div class="b-item" id="nav-settings" onclick="showPage('settings')">⚙️<br>Settings</div>
-</div>
-
-<script>
-let wallet=parseFloat(localStorage.getItem('wallet')||'0');
-let tx=JSON.parse(localStorage.getItem('transactions')||'[]');
-let pending=JSON.parse(localStorage.getItem('pendingFundings')||'[]');
-function save(){localStorage.setItem('wallet',wallet);localStorage.setItem('transactions',JSON.stringify(tx));localStorage.setItem('pendingFundings',JSON.stringify(pending));render();}
-function render(){
- document.getElementById('totalBal').innerText='₦'+wallet.toFixed(2);
- document.getElementById('availBal').innerText='₦'+wallet.toFixed(2);
- let h='';if(tx.length==0)h='<div style="color:#888;font-size:13px">No transaction yet</div>';
- else [...tx].reverse().forEach(t=>{let cls=t.status=='Success'?'success':t.status=='Failed'?'failed':'pending';let icon=t.status=='Success'?'✅':t.status=='Failed'?'❌':'⏳';h+=`<div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #eee"><div>${icon} <b>${t.type}</b> - ₦${t.amount}<br><small style="color:#888">${t.date}</small></div><span class="tag ${cls}">${t.status}</span></div>`});
- document.getElementById('history').innerHTML=h;
- let p='';if(pending.length==0)p='<div style="color:#888">No pending fundings</div>';
- else pending.forEach((f,i)=>{p+=`<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #ddd"><div><b>₦${f.amount}</b><br><small>${f.date}</small><br><span class="tag pending">Pending</span></div><div><button class="payBtn" style="width:auto;padding:8px 14px;background:green" onclick="approve(${i})">Approve</button></div></div>`});
- document.getElementById('pendingList').innerHTML=p;
-}
-function showPage(p){
- document.getElementById('page-home').classList.add('hidden');
- document.getElementById('page-services').classList.add('hidden');
- document.getElementById('page-history').classList.add('hidden');
- document.getElementById('page-settings').classList.add('hidden');
- document.getElementById('page-'+p).classList.remove('hidden');
- document.querySelectorAll('.b-item').forEach(e=>e.classList.remove('active'));
- document.getElementById('nav-'+p).classList.add('active');
- render();
-}
-function focusFund(){showPage('home');}
-function openForm(n){document.getElementById('serviceForms').classList.remove('hidden');document.querySelectorAll('[id^=form-]').forEach(e=>e.classList.add('hidden'));document.getElementById('form-'+n).classList.remove('hidden');}
-function closeForms(){document.getElementById('serviceForms').classList.add('hidden');}
-function copyNum(){navigator.clipboard.writeText('2370760036');alert('Copied: 2370760036');}
-function fundNow(){let a=parseFloat(document.getElementById('fundAmt').value);if(!a)return alert('Enter amount');let now=new Date().toLocaleString();pending.push({amount:a,date:now});tx.push({type:'WALLET FUNDING',amount:a,date:now,status:'Pending'});save();alert('₦'+a+' is now PENDING. Go to Settings > Admin Panel to Approve');showPage('history');}
-function approve(i){let f=pending[i];wallet+=parseFloat(f.amount);for(let j=tx.length-1;j>=0;j--){if(tx[j].amount==f.amount&&tx[j].status=='Pending'){tx[j].status='Success';break;}}pending.splice(i,1);save();}
-function unlockAdmin(){if(document.getElementById('adminPin').value=='1234'){document.getElementById('adminArea').classList.remove('hidden');render();}else alert('Wrong PIN');}
-function buy(t){let amt=parseFloat(document.getElementById('amt')?.value)||parseFloat(document.getElementById('betAmt')?.value)||200;if(wallet<amt)return alert('Fund wallet first');wallet-=amt;tx.push({type:t,amount:amt,date:new Date().toLocaleString(),status:'Success'});save();closeForms();showPage('history');}
-render();
-</script>
-</body>
-  </html>
+<div class="ubaBox"><small>UBA BANK ACCOUNT</small><div class="ubaNum">2370760036</div><div class="ubaName">MUSTAPHA MUBARAK</div><button class="
