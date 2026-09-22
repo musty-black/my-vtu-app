@@ -86,4 +86,24 @@ let tx=JSON.parse(localStorage.getItem('transactions')||'[]');
 let pending=JSON.parse(localStorage.getItem('pendingFundings')||'[]');
 function save(){localStorage.setItem('wallet',wallet);localStorage.setItem('transactions',JSON.stringify(tx));localStorage.setItem('pendingFundings',JSON.stringify(pending));render();}
 function render(){
- document.getElementById('bal').innerText='₦ '+
+ document.getElementById('bal').innerText='₦ '+wallet.toFixed(2);
+ let h=''; if(tx.length==0) h='<div style="color:#888;font-size:13px">No transaction yet - Fund to see PENDING</div>';
+ else [...tx].reverse().forEach(t=>{let icon=t.status=='Success'?'✅':t.status=='Failed'?'❌':'⏳';let cls=t.status=='Success'?'success':t.status=='Failed'?'failed':'pending';h+=`<div class="trans-item"><span>${icon}</span><div style="flex:1"><b>${t.type}</b> - ₦${t.amount} - <span class="tag ${cls}">${t.status}</span><br><small style="color:#888">${t.date}</small></div></div>`});
+ document.getElementById('history').innerHTML=h;
+ let p=''; if(pending.length==0) p='<div style="color:#888">No pending</div>';
+ else pending.forEach((f,i)=>{p+=`<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #eee"><div><b>₦${f.amount}</b><br><small>${f.date}</small><br><span class="tag pending">Pending</span></div><div><button class="btn" style="width:auto;padding:8px 12px;background:green" onclick="approve(${i})">Approve</button> <button class="btn" style="width:auto;padding:8px 12px;background:red" onclick="decline(${i})">Decline</button></div></div>`});
+ document.getElementById('pendingList').innerHTML=p;
+}
+function closeAll(){document.querySelectorAll('[id^=form-], #fundBox').forEach(e=>e.classList.add('hidden'));}
+function openFund(){closeAll();document.getElementById('fundBox').classList.remove('hidden');}
+function openS(n){closeAll();document.getElementById('form-'+n).classList.remove('hidden');document.getElementById('form-'+n).scrollIntoView({behavior:'smooth'});}
+function fundNow(){let a=parseFloat(document.getElementById('fundAmt').value);if(!a)return alert('Enter amount');let now=new Date().toLocaleString();pending.push({amount:a,date:now});tx.push({type:'WALLET FUNDING',amount:a,date:now,status:'Pending'});save();closeAll();alert('₦'+a+' now PENDING - Check Recent Transactions, then go Admin Approve');}
+function approve(i){let f=pending[i];wallet+=parseFloat(f.amount);for(let j=tx.length-1;j>=0;j--){if(tx[j].amount==f.amount&&tx[j].status=='Pending'){tx[j].status='Success';break;}}pending.splice(i,1);save();alert('Approved Pending → Successful');}
+function decline(i){let f=pending[i];for(let j=tx.length-1;j>=0;j--){if(tx[j].amount==f.amount&&tx[j].status=='Pending'){tx[j].status='Failed';break;}}pending.splice(i,1);save();}
+function unlockAdmin(){if(document.getElementById('adminPin').value=='2025'){document.getElementById('adminArea').classList.remove('hidden');render();}else alert('Wrong PIN');}
+function buy(t){let amt=parseFloat(document.getElementById('amt')?.value)||200;if(wallet<amt)return alert('Fund wallet first');wallet-=amt;tx.push({type:t,amount:amt,date:new Date().toLocaleString(),status:'Success'});save();closeAll();alert(t+' Success');}
+function buyBet(){let amt=parseFloat(document.getElementById('betAmt').value)||200;if(wallet<amt)return alert('Fund wallet first');wallet-=amt;tx.push({type:'BETTING',amount:amt,date:new Date().toLocaleString(),status:'Success'});save();closeAll();alert('Betting Funded Successfully');}
+render();
+</script>
+</body>
+ </html>
