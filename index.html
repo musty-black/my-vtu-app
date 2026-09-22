@@ -7,25 +7,23 @@
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#00b875">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,system-ui}
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
 body{background:#f5f5f5;padding-bottom:80px}
 .top{background:#00b875;color:white;padding:16px 16px 26px;border-radius:0 0 22px 22px}
-.top1{display:flex;justify-content:space-between;align-items:center}
-.bal{margin-top:14px}
-.bal h1{font-size:32px;margin:6px 0}
-.bal span{opacity:.9}
-.quick{display:flex;gap:10px;margin-top:16px}
-.qbtn{background:rgba(255,255,255,.18);backdrop-filter:blur(10px);border:none;color:white;padding:12px 16px;border-radius:12px;font-weight:600;flex:1}
-.cards{display:flex;gap:12px;margin:-20px 14px 0}
-.mcard{background:white;border-radius:14px;padding:12px 14px;flex:1;box-shadow:0 4px 18px rgba(0,0,0,.07);display:flex;align-items:center;gap:10px;font-size:13px;font-weight:600}
+.top1{display:flex;justify-content:space-between}
+.bal{margin-top:12px}
+.bal h1{font-size:32px;margin:5px 0}
+.quick{display:flex;gap:10px;margin-top:14px}
+.qbtn{background:rgba(255,255,255,.18);border:none;color:white;padding:12px;border-radius:12px;font-weight:600;flex:1}
+.cards{display:flex;gap:12px;margin:-18px 14px 0}
+.mcard{background:white;border-radius:14px;padding:12px;flex:1;box-shadow:0 4px 18px rgba(0,0,0,.07);font-size:13px;font-weight:600}
 .grid{background:white;margin:14px;border-radius:16px;padding:14px}
 .gtitle{font-weight:700;margin-bottom:10px}
 .icons{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
 .ic{text-align:center;font-size:12px}
 .ic div{width:48px;height:48px;margin:0 auto 6px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;background:#f0faf5}
-.promo{margin:14px;background:linear-gradient(135deg,#00b875,#00d68f);border-radius:16px;padding:14px;color:white;display:flex;justify-content:space-between;align-items:center}
 .bottom{position:fixed;bottom:0;left:0;width:100%;background:white;border-top:1px solid #eee;display:flex;justify-content:space-around;padding:8px 0}
-.bitem{text-align:center;font-size:11px;color:#999}
+.bitem{text-align:center;font-size:11px;color:#999;flex:1}
 .bitem.active{color:#00b875}
 .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:99;justify-content:center;align-items:end}
 .modal.active{display:flex}
@@ -37,14 +35,14 @@ input,select{width:100%;padding:14px;margin:8px 0;border:1px solid #ddd;border-r
 </head>
 <body>
 <div class="top">
-<div class="top1"><b>👤 Hi, Mustapha</b><span>🔔 Help • Scan</span></div>
+<div class="top1"><b>👤 Hi, Mustapha</b><span>🔔 Help</span></div>
 <div class="bal"><span>Available Balance <span onclick="toggleBal()">👁️</span></span><h1 id="bal">₦ 0.00</h1><span>UBA • 2370760036</span></div>
-<div class="quick"><button class="qbtn" onclick="openM('fund')">+ Add Money</button><button class="qbtn" onclick="openM('transfer')">⇄ Transfer</button><button class="qbtn" onclick="openM('withdraw')">↓ Withdraw</button></div>
+<div class="quick"><button class="qbtn" onclick="openM('fund')">+ Add</button><button class="qbtn" onclick="openM('transfer')">⇄ Transfer</button><button class="qbtn" onclick="openM('bet')">⚽ Betting</button></div>
 </div>
 
 <div class="cards">
+<div class="mcard" onclick="openM('refer')" style="cursor:pointer">📊 Refer & Earn ₦500 - Click</div>
 <div class="mcard">🛡️ OWealth 5% p.a</div>
-<div class="mcard">📊 Refer & Earn ₦500</div>
 </div>
 
 <div class="grid">
@@ -52,66 +50,73 @@ input,select{width:100%;padding:14px;margin:8px 0;border:1px solid #ddd;border-r
 <div class="icons">
 <div class="ic" onclick="openM('airtime')"><div>📞</div>Airtime</div>
 <div class="ic" onclick="openM('data')"><div>📶</div>Data</div>
-<div class="ic" onclick="alert('Coming soon')"><div>⚽</div>Betting</div>
-<div class="ic" onclick="alert('Coming soon')"><div>📺</div>TV</div>
-<div class="ic" onclick="alert('Coming soon')"><div>💡</div>Electricity</div>
-<div class="ic" onclick="alert('Coming soon')"><div>🎓</div>Education</div>
-<div class="ic" onclick="alert('Coming soon')"><div>✈️</div>Flight</div>
-<div class="ic" onclick="alert('Coming soon')"><div>➕</div>More</div>
+<div class="ic" onclick="openM('bet')"><div>⚽</div>Betting</div>
+<div class="ic" onclick="alert('TV coming')"><div>📺</div>TV</div>
+<div class="ic" onclick="alert('Light coming')"><div>💡</div>Electricity</div>
+<div class="ic" onclick="alert('Edu coming')"><div>🎓</div>Education</div>
 </div>
 </div>
 
-<div class="promo"><span><b>Invite friends</b><br><small>Get ₦500 cash</small></span><span>→</span></div>
+<div class="grid" id="txWrap"><div class="gtitle">History</div><div id="trans" style="font-size:13px;color:#777">No transactions yet</div></div>
 
-<div class="grid" id="txWrap"><div class="gtitle">Transaction History</div><div id="trans" style="font-size:13px;color:#777">No transactions yet</div></div>
-
+<!-- BOTTOM - CARD DON COMOT, NA 4 REMAIN -->
 <div class="bottom">
-<div class="bitem active">🏠<br>Home</div><div class="bitem">🎁<br>Rewards</div><div class="bitem">📈<br>Finance</div><div class="bitem">💳<br>Cards</div><div class="bitem">👤<br>Me</div>
+<div class="bitem active">🏠<br>Home</div>
+<div class="bitem" onclick="openM('refer')">🎁<br>Rewards</div>
+<div class="bitem">📈<br>Finance</div>
+<div class="bitem">👤<br>Me</div>
 </div>
 
-<!-- FUND MODAL -->
 <div class="modal" id="fund"><div class="mbox">
 <h3>Add Money via UBA</h3>
+<div class="bankBox"><p>UBA - Mustapha Mubarak</p><p style="font-size:22px"><b>2370760036</b></p><button class="btnMain" onclick="navigator.clipboard.writeText('2370760036');alert('Copied')">Copy Account</button></div>
+<input type="number" id="bankAmt" placeholder="Amount you sent"><button class="btnMain" onclick="doFund()">I Have Paid</button><button class="btnMain" style="background:#eee;color:#333" onclick="closeM('fund')">Close</button>
+</div></div>
+
+<!-- BETTING - NOW DEY WORK -->
+<div class="modal" id="bet"><div class="mbox">
+<h3>Fund Betting Wallet</h3>
+<select id="betPlatform"><option>SportyBet</option><option>1xBet</option><option>Bet9ja</option><option>BetKing</option><option>NairaBet</option><option>MerryBet</option></select>
+<input type="number" id="betID" placeholder="User ID / Phone for betting account">
+<input type="number" id="betAmt" placeholder="Amount e.g 1000">
+<button class="btnMain" onclick="doBet()">Fund Betting Now</button>
+<button class="btnMain" style="background:#eee;color:#333" onclick="closeM('bet')">Close</button>
+<p style="font-size:11px;color:#666;margin-top:8px">Note: For now na demo, you go later connect real betting API (like VTU.ng or ClubKonnect). The money go comot for wallet.</p>
+</div></div>
+
+<!-- REFER - NOW DEY WORK -->
+<div class="modal" id="refer"><div class="mbox">
+<h3>Refer & Earn ₦500</h3>
 <div class="bankBox">
-<p>Bank: <b>UBA</b></p><p>Name: <b>Mustapha Mubarak</b></p><p>No: <b style="font-size:22px">2370760036</b></p>
-<button class="btnMain" onclick="navigator.clipboard.writeText('2370760036');alert('Copied 2370760036')">Copy Account</button>
+<p><b>Your Referral Link:</b></p>
+<p id="refLink" style="font-size:13px;word-break:break-all">https://musty-black.github.io/my-vtu-app/?ref=MUSTY123</p>
+<button class="btnMain" onclick="shareRef()">Share Link on WhatsApp</button>
+<button class="btnMain" style="background:#25D366" onclick="copyRef()">Copy Link</button>
 </div>
-<input type="number" id="bankAmt" placeholder="Amount you sent e.g 2000">
-<button class="btnMain" onclick="doFund()">I Have Paid - Credit Me</button>
-<button class="btnMain" style="background:#eee;color:#333" onclick="closeM('fund')">Close</button>
+<p style="font-size:13px;margin-top:10px">You don invite: <b id="refCount">0</b> friends</p>
+<p style="font-size:13px">Earning: <b id="refEarn">₦0</b></p>
+<button class="btnMain" style="background:#eee;color:#333" onclick="closeM('refer')">Close</button>
 </div></div>
 
-<!-- AIRTIME -->
-<div class="modal" id="airtime"><div class="mbox">
-<h3>Airtime</h3><select id="airNet"><option>MTN</option><option>Airtel</option><option>Glo</option><option>9mobile</option></select>
-<input id="airPhone" placeholder="Phone number"><input id="airAmt" type="number" placeholder="Amount">
-<button class="btnMain" onclick="buyAir()">Buy Airtime</button><button class="btnMain" style="background:#eee;color:#333" onclick="closeM('airtime')">Close</button>
-</div></div>
+<div class="modal" id="airtime"><div class="mbox"><h3>Airtime</h3><select id="airNet"><option>MTN</option><option>Airtel</option><option>Glo</option><option>9mobile</option></select><input id="airPhone" placeholder="Phone"><input id="airAmt" type="number" placeholder="Amount"><button class="btnMain" onclick="buyAir()">Buy</button><button class="btnMain" style="background:#eee;color:#333" onclick="closeM('airtime')">Close</button></div></div>
 
-<!-- DATA -->
-<div class="modal" id="data"><div class="mbox">
-<h3>Data Bundle</h3><select id="dataNet"><option>MTN</option><option>Airtel</option><option>Glo</option><option>9mobile</option></select>
-<select id="dataPlan"><option value="150">500MB - ₦150</option><option value="300">1GB - ₦300</option><option value="600">2GB - ₦600</option><option value="1500">5GB - ₦1500</option><option value="2500">10GB - ₦2500</option></select>
-<input id="dataPhone" placeholder="Phone number">
-<button class="btnMain" onclick="buyData()">Buy Data</button><button class="btnMain" style="background:#eee;color:#333" onclick="closeM('data')">Close</button>
-</div></div>
-
-<!-- TRANSFER -->
-<div class="modal" id="transfer"><div class="mbox">
-<h3>Transfer to Bank</h3><input placeholder="Account number"><input placeholder="Amount"><button class="btnMain" onclick="alert('Transfer simulated - add real API later')">Transfer Now</button><button class="btnMain" style="background:#eee;color:#333" onclick="closeM('transfer')">Close</button>
-</div></div>
+<div class="modal" id="data"><div class="mbox"><h3>Data</h3><select id="dataNet"><option>MTN</option><option>Airtel</option><option>Glo</option><option>9mobile</option></select><select id="dataPlan"><option value="150">500MB - ₦150</option><option value="300">1GB - ₦300</option><option value="600">2GB - ₦600</option><option value="1500">5GB - ₦1500</option></select><input id="dataPhone" placeholder="Phone"><button class="btnMain" onclick="buyData()">Buy</button><button class="btnMain" style="background:#eee;color:#333" onclick="closeM('data')">Close</button></div></div>
 
 <script>
 let bal=parseInt(localStorage.getItem('vtu_bal')||'0');let hide=false;
 let txs=JSON.parse(localStorage.getItem('vtu_txs')||'[]');
-function render(){document.getElementById('bal').innerText=hide?'₦ ****':'₦ '+bal.toLocaleString()+'.00';let d=document.getElementById('trans');if(!txs.length){d.innerHTML='No transactions yet';return}d.innerHTML=txs.slice(0,15).map(t=>`<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f0f0f0"><span>${t.type}<br><small>${t.date}</small></span><b>₦${t.amount}</b></div>`).join('')}
+let refCount=parseInt(localStorage.getItem('ref_count')||'0');
+function render(){document.getElementById('bal').innerText=hide?'₦ ****':'₦ '+bal.toLocaleString()+'.00';let d=document.getElementById('trans');if(!txs.length){d.innerHTML='No transactions yet';return}d.innerHTML=txs.slice(0,15).map(t=>`<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f0"><span>${t.type}<br><small>${t.date}</small></span><b>₦${t.amount}</b></div>`).join('');document.getElementById('refCount').innerText=refCount;document.getElementById('refEarn').innerText='₦'+(refCount*500).toLocaleString()}
 render();
 function openM(id){document.getElementById(id).classList.add('active')}
 function closeM(id){document.getElementById(id).classList.remove('active')}
 function toggleBal(){hide=!hide;render()}
-function doFund(){let a=parseInt(document.getElementById('bankAmt').value);if(!a||a<100)return alert('Enter amount');bal+=a;localStorage.setItem('vtu_bal',bal);txs.unshift({type:'Funding UBA 2370760036',amount:a,date:new Date().toLocaleString()});localStorage.setItem('vtu_txs',JSON.stringify(txs));render();closeM('fund');alert('Credited ₦'+a)}
-function buyAir(){let a=parseInt(document.getElementById('airAmt').value);if(bal<a)return alert('Low balance, fund via UBA');bal-=a;localStorage.setItem('vtu_bal',bal);txs.unshift({type:'Airtime '+document.getElementById('airNet').value,amount:a,date:new Date().toLocaleString()});localStorage.setItem('vtu_txs',JSON.stringify(txs));render();closeM('airtime');alert('Airtime sent')}
+function doFund(){let a=parseInt(document.getElementById('bankAmt').value);if(!a||a<100)return alert('Enter amount');bal+=a;localStorage.setItem('vtu_bal',bal);txs.unshift({type:'Funding UBA',amount:a,date:new Date().toLocaleString()});localStorage.setItem('vtu_txs',JSON.stringify(txs));render();closeM('fund');alert('Credited ₦'+a)}
+function buyAir(){let a=parseInt(document.getElementById('airAmt').value);if(bal<a)return alert('Low balance');bal-=a;localStorage.setItem('vtu_bal',bal);txs.unshift({type:'Airtime '+document.getElementById('airNet').value,amount:a,date:new Date().toLocaleString()});localStorage.setItem('vtu_txs',JSON.stringify(txs));render();closeM('airtime');alert('Airtime sent')}
 function buyData(){let a=parseInt(document.getElementById('dataPlan').value);if(bal<a)return alert('Low balance');bal-=a;localStorage.setItem('vtu_bal',bal);txs.unshift({type:'Data '+document.getElementById('dataNet').value,amount:a,date:new Date().toLocaleString()});localStorage.setItem('vtu_txs',JSON.stringify(txs));render();closeM('data');alert('Data sent')}
+function doBet(){let a=parseInt(document.getElementById('betAmt').value);let p=document.getElementById('betPlatform').value;let id=document.getElementById('betID').value;if(!id)return alert('Enter betting ID');if(bal<a)return alert('Low balance, fund UBA first');bal-=a;localStorage.setItem('vtu_bal',bal);txs.unshift({type:'Betting - '+p+' ID:'+id,amount:a,date:new Date().toLocaleString()});localStorage.setItem('vtu_txs',JSON.stringify(txs));render();closeM('bet');alert('₦'+a+' sent to '+p+' for ID '+id+' - Wallet debited. Connect real API later to make am real.')}
+function shareRef(){let link=document.getElementById('refLink').innerText;window.open('https://wa.me/?text=Join my VTU app and earn! '+encodeURIComponent(link),'_blank');refCount++;localStorage.setItem('ref_count',refCount);bal+=500;localStorage.setItem('vtu_bal',bal);txs.unshift({type:'Referral Bonus',amount:500,date:new Date().toLocaleString()});localStorage.setItem('vtu_txs',JSON.stringify(txs));render();alert('You earned ₦500 referral bonus (demo)')}
+function copyRef(){navigator.clipboard.writeText(document.getElementById('refLink').innerText);alert('Referral link copied!')}
 </script>
 </body>
-                                                                                                                                                                                                                     </html>
+                                             </html>
